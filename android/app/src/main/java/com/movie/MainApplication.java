@@ -1,5 +1,7 @@
 package com.movie;
 
+import com.oblador.vectoricons.VectorIconsPackage;
+
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
@@ -27,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
           new MainReactPackage(),
             new ReanimatedPackage(),
             new RNGestureHandlerPackage()
+          , new VectorIconsPackage()
       );
     }
 
