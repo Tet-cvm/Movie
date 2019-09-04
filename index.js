@@ -63,42 +63,6 @@ const TabScreen = createBottomTabNavigator({
     }
 });
 
-// const TabScreen = createBottomTabNavigator({
-//     Active: Active,
-//     Home: Home,
-//     User: User,
-// }, {
-//     navigationOptions: ({navigation}) => ({
-//         tabBarIcon: ({focused, tintColor}) => {
-//             const {routeName} = navigation.state;
-//             if (routeName === 'Active') {
-//                 return <Feather name='feather' size={25} color={tintColor}/>;
-//             } else if (routeName === 'Home') {
-//                 return <AntDesign name='staro' size={25} color={tintColor}/>;
-//             } else if (routeName === 'User') {
-//                 return <FontAwesome name='user-o' size={25} color={tintColor}/>;
-//             }
-//         },
-//     }),
-//     initialRouteName: 'Home', //初次加载组件
-//     tabBarOptions: {
-//         activeTintColor: '#10aeff',
-//         inactiveTintColor: '#999999',
-//         showIcon: true,
-//         labelStyle: {
-//             fontSize: 12,
-//             marginTop: 0,
-//             marginBottom: 0,
-//         },
-//         style: {
-//             backgroundColor: '#FCFCFC',
-//             paddingBottom: 1
-//         },
-//         tabStyle: {
-//         }
-//     },
-// })
-
 const AppNavigator = createStackNavigator({
     Home: TabScreen,
     Active: Active,
