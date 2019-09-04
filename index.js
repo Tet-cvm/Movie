@@ -9,6 +9,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // 组件
 import Active from './component/Active/Active';
 import Home from './component/Home/Home';
+import Detail from './component/Home/Detail';
 import User from './component/User/User';
 import Login from './component/User/Login';
 
@@ -67,9 +68,11 @@ const AppNavigator = createStackNavigator({
     Home: TabScreen,
     Active: Active,
     User: User,
-    Login: Login
+    Login: Login,
+    Detail: Detail
 }, {
-    headerMode: 'none'
+    headerMode: 'none',
+    mode: 'modal'
 });
 
 const AppContainer = createAppContainer(AppNavigator);

@@ -7,7 +7,14 @@ export default class Home extends Component {
             <View style={styles.Home}>
                 <Text>Home</Text>
                 <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Login')}}>
-                    <Text>Press</Text>
+                    <Text>Login</Text>
+                </TouchableHighlight>
+                <Text>Home</Text>
+                <Text>Home</Text>
+                <Text>Home</Text>
+                <Text>Home</Text>
+                <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Detail')}}>
+                    <Text>Detail</Text>
                 </TouchableHighlight>
             </View>
         )
