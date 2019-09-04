@@ -7,10 +7,23 @@ export default class Login extends Component {
     render() {
         return (
             <View style={styles.Login}>
-                <View>
-                    <Round/>
+                <Round navigation={this.props.navigation}/>
+                <View style={styles.Container}>
+                    <Text>Login</Text>
+                    <Text>Login</Text>
+                    <Text>Login</Text>
+                    <Text>Login</Text>
+                    <Text>Login</Text>
+                    <Text>Login</Text><Text>Login</Text>
+                    <Text>Login</Text><Text>Login</Text>
+                    <Text>Login</Text><Text>Login</Text>
+                    <Text>Login</Text><Text>Login</Text>
+                    <Text>Login</Text><Text>Login</Text>
+                    <Text>Login</Text><Text>Login</Text>
+                    <Text>Login</Text><Text>Login</Text>
+                    <Text>Login</Text><Text>Login</Text><Text>Login</Text><Text>Login</Text><Text>Login</Text><Text>Login</Text><Text>Login</Text>
+                    <Text>Login</Text><Text>Login</Text><Text>Login</Text><Text>Login</Text>
                 </View>
-                <Text>Login</Text>
             </View>
         )
     }
@@ -18,9 +31,13 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
     Login: {
+
+    },
+    Container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: 375,
+        height: '100%',
+        position: 'relative',
         backgroundColor: 'cyan'
     }
 })
