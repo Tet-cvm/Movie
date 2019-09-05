@@ -8,7 +8,7 @@ export default class Round extends Component {
         return (
             <View style={styles.Round}>
                 <TouchableHighlight style={styles.History} underlayColor="transparent" onPress={()=>{this.props.navigation.goBack()}}>
-                    <Ionicons name='ios-arrow-back' size={26} color='#666666'/>
+                    <Ionicons name='ios-close' size={28} color='#666666'/>
                 </TouchableHighlight>
             </View>
         )

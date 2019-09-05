@@ -11,6 +11,7 @@ import Active from './component/Active/Active';
 import Home from './component/Home/Home';
 import Detail from './component/Home/Detail';
 import User from './component/User/User';
+import Info from './component/User/Info';
 import Login from './component/User/Login';
 
 import {name as appName} from './app.json';
@@ -68,6 +69,7 @@ const AppNavigator = createStackNavigator({
     Home: TabScreen,
     Active: Active,
     User: User,
+    Info: Info,
     Login: Login,
     Detail: Detail
 }, {
