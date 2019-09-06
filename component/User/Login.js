@@ -3,6 +3,8 @@ import {StyleSheet, Text, View, Dimensions, KeyboardAvoidingView, TouchableHighl
 import Round from '../Common/Round';
 import Button from '../Common/Button';
 import { Hoshi } from 'react-native-textinput-effects';
+import Toast from 'react-native-root-toast';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class Login extends Component {
     constructor(props) {
@@ -12,7 +14,9 @@ export default class Login extends Component {
             password: '',
             verifyAccount: false,
             verifyPassword: false,
-            disable: true
+            disable: true,
+            spinner: false,
+            toast: true,
         }
     }
 
@@ -53,9 +57,39 @@ export default class Login extends Component {
     }
 
     _onSubmit = ()=> {
-
+        if (this.state.verifyAccount && this.state.verifyPassword) {
+            this.setState({spinner: true});
+        } else {
+            Alert.alert('验证不通过');
+        }
     }
-    
+
+    componentDidMount() {
+        let toast = Toast.show('This is a message', {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.BOTTOM,
+            shadow: true,
+            animation: true,
+            hideOnPress: true,
+            delay: 0,
+            onShow: () => {
+                // calls on toast\`s appear animation start
+            },
+            onShown: () => {
+                // calls on toast\`s appear animation end.
+            },
+            onHide: () => {
+                // calls on toast\`s hide animation start.
+            },
+            onHidden: () => {
+                // calls on toast\`s hide animation end.
+            }
+        });
+
+        setTimeout(function () {
+            Toast.hide(toast);
+        }, 30000);
+    }
 
     render() {
         return (
@@ -137,6 +171,27 @@ export default class Login extends Component {
                                 />
                         </View>
                 </KeyboardAvoidingView>
+                <Spinner
+                    visible={this.state.spinner}
+                    textContent={'登录中...'}
+                    panelStyle={{
+                        width: 82,
+                        height: 82,
+                        borderRadius: 5,
+                        backgroundColor: 'rgba(0, 0, 0, 0.88)'
+                    }}
+                    textStyle={{
+                        top: 26,
+                        fontSize: 13,
+                        color: '#ffffff',
+                        height: 'auto',
+                        fontWeight:'normal'
+                    }}
+                    color={'#ffffff'}
+                    animation={'fade'}
+                    overlayColor={'rgba(0, 0, 0, 0.38)'}
+                    size={'small'}
+                    />
             </View>
         )
     }
