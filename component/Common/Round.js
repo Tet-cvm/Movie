@@ -17,20 +17,17 @@ export default class Round extends Component {
 
 const styles = StyleSheet.create({
     Round: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: 45,
-        height: 45,
-        marginLeft: 14
+        paddingTop: 18,
+        paddingLeft: 14,
+        width: 375,
+        height: 62
     },
     History: {
-        position: 'relative',
         flex: 1,
         width: 45,
         height: 45,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 45,
+        borderRadius: 45
     }
 })
