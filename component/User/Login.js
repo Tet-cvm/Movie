@@ -4,7 +4,6 @@ import Round from '../Common/Round';
 import Button from '../Common/Button';
 import { Hoshi } from 'react-native-textinput-effects';
 
-
 export default class Login extends Component {
     constructor(props) {
         super(props)
@@ -54,8 +53,9 @@ export default class Login extends Component {
     }
 
     _onSubmit = ()=> {
-        Alert.alert('_onSubmit');
+
     }
+    
 
     render() {
         return (
@@ -73,6 +73,10 @@ export default class Login extends Component {
                                 labelStyle={{
                                     fontSize: 16,
                                     color: '#333333',
+                                }}
+                                sageStyle={{
+                                    fontSize: 14,
+                                    color: '#666666',
                                 }}
                                 inputStyle={{
                                     fontSize: 17,
@@ -96,9 +100,14 @@ export default class Login extends Component {
                                     fontSize: 16,
                                     color: '#333333',
                                 }}
+                                sageStyle={{
+                                    fontSize: 14,
+                                    color: '#666666',
+                                }}
                                 inputStyle={{
                                     fontSize: 16,
                                     color: '#333333',
+                                    fontWeight: 'normal'
                                 }}
                                 selectionColor={'#333333'}
                                 maskColor={'#ffffff'}
