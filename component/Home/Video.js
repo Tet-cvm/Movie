@@ -3,7 +3,7 @@ import {StyleSheet, Text, View, TouchableHighlight, Alert} from 'react-native';
 
 import Back from '../Common/Back';
 
-export default class Detail extends Component {
+export default class Video extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -19,10 +19,10 @@ export default class Detail extends Component {
     }
 
     _onFetch = ()=> {
-        fetch('https://mdqygl.cn/Test/detail.json')
+        fetch('https://mdqygl.cn/Test/movie.json')
         .then((response) => response.json())
         .then((res) => {
-            // Alert.alert(res.id.toString());
+            // Alert.alert(res.url);
         })
         .catch((error) =>{
 
@@ -31,14 +31,10 @@ export default class Detail extends Component {
 
     render() {
         return (
-            <View style={styles.Detail}>
+            <View style={styles.Video}>
                 <Back navigation={this.props.navigation}/>
                 <View style={styles.Container}>
-                    <Text>Detail</Text>
-                    <Text>Detail</Text>
-                    <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Video', {id: this.state.id})}}>
-                        <Text>go video</Text>
-                    </TouchableHighlight>
+                    <Text>Video</Text>
                 </View>
             </View>
         )
@@ -46,7 +42,7 @@ export default class Detail extends Component {
 }
 
 const styles = StyleSheet.create({
-    Detail: {
+    Video: {
         flex: 1,
         flexDirection: 'column'
     },

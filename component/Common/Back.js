@@ -9,7 +9,7 @@ export default class Back extends Component {
             <View style={styles.Back}>
                 <View style={styles.Arrow}>
                     <TouchableHighlight style={styles.History} underlayColor="transparent" onPress={()=>{this.props.navigation.goBack()}}>
-                        <Ionicons name='ios-arrow-back' size={26} color='#666666'/>
+                        <Ionicons name='ios-arrow-back' size={26} color='#ffffff'/>
                     </TouchableHighlight>
                 </View>
                 <View style={styles.Menu}></View>
@@ -22,9 +22,7 @@ const styles = StyleSheet.create({
     Back: {
         width: 370,
         height: 45,
-        borderBottomWidth: 0.5,
-        borderBottomColor: '#d1d1d1',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#10aeff',
         flexDirection: 'row'
     },
     Arrow: {
@@ -34,7 +32,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'flex-start',
-        paddingLeft: 14,
+        paddingLeft: 18,
         width: "100%"
     },
     Menu: {

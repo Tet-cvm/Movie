@@ -59,36 +59,36 @@ export default class Login extends Component {
     _onSubmit = ()=> {
         if (this.state.verifyAccount && this.state.verifyPassword) {
             this.setState({spinner: true});
+            this._onFetch();
         } else {
-            Alert.alert('验证不通过');
+            this._onToast('账户密码输入有误');
         }
     }
 
-    componentDidMount() {
-        let toast = Toast.show('This is a message', {
+    _onFetch = ()=> {
+        fetch('https://mdqygl.cn/Test/Chapter000.json')
+        .then((response) => response.json())
+        .then((res) => {
+            this.setState({spinner: false}, function() {
+                this.props.navigation.goBack();
+            });
+        })
+        .catch((error) =>{
+            this.setState({spinner: false}, function() {
+                this._onToast('网络错误~');
+            });
+        });
+    }
+
+    _onToast = (message)=> {
+        Toast.show(message, {
             duration: Toast.durations.LONG,
-            position: Toast.positions.BOTTOM,
+            position: Toast.positions.CENTER,
             shadow: true,
             animation: true,
             hideOnPress: true,
-            delay: 0,
-            onShow: () => {
-                // calls on toast\`s appear animation start
-            },
-            onShown: () => {
-                // calls on toast\`s appear animation end.
-            },
-            onHide: () => {
-                // calls on toast\`s hide animation start.
-            },
-            onHidden: () => {
-                // calls on toast\`s hide animation end.
-            }
+            delay: 0
         });
-
-        setTimeout(function () {
-            Toast.hide(toast);
-        }, 30000);
     }
 
     render() {
