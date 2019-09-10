@@ -36,8 +36,8 @@ export default class Detail extends Component {
                 <View style={styles.Container}>
                     <Text>Detail</Text>
                     <Text>Detail</Text>
-                    <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Video', {id: this.state.id})}}>
-                        <Text>go video</Text>
+                    <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Player', {id: this.state.id})}}>
+                        <Text>go player</Text>
                     </TouchableHighlight>
                 </View>
             </View>

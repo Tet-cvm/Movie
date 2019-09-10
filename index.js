@@ -10,7 +10,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Active from './component/Active/Active';
 import Home from './component/Home/Home';
 import Detail from './component/Home/Detail';
-import Video from './component/Home/Video';
+import Player from './component/Home/Player';
 import User from './component/User/User';
 import Info from './component/User/Info';
 import Login from './component/User/Login';
@@ -73,7 +73,7 @@ const AppNavigator = createStackNavigator({
     Info: Info,
     Login: Login,
     Detail: Detail,
-    Video: Video
+    Player: Player
 }, {
     headerMode: 'none',
     mode: 'modal'

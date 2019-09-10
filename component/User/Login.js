@@ -20,6 +20,10 @@ export default class Login extends Component {
         }
     }
 
+    componentDidMount() {
+        this._onToast('账户密码输入有误');
+    }
+
     _onAccount = (account)=> {
         const p_valide = /(1[3-9]\d{9}$)/; //手机正则
         const e_valide = /^[0-9a-z][0-9a-z\-\_\.]+@([0-9a-z][0-9a-z\-]*\.)+[a-z]{2,}$/; //邮箱正则
