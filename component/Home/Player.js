@@ -4,6 +4,7 @@ import {View, Dimensions, Image, Text, TouchableWithoutFeedback, TouchableOpacit
 import Back from '../Common/Back';
 import Video from 'react-native-video';
 import Orientation from 'react-native-orientation';
+import Slider from "react-native-slider";
 
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -264,17 +265,17 @@ export default class Player extends Component {
                                 }
                             </TouchableOpacity>
                             <Text style={styles.Time}>{formatTime(this.state.currentTime)}</Text>
-                            {/* <Slider
-                            style={{flex: 1}}
-                            maximumTrackTintColor={'#999999'}
-                            minimumTrackTintColor={'#00c06d'}
-                            thumbImage={"https://mdqygl.cn/Test/Logo.png"}
-                            // thumbImage={require('../../assets/image/icon_control_slider.png')}
-                            value={this.state.currentTime}
-                            minimumValue={0}
-                            maximumValue={this.state.duration}
-                            onValueChange={(currentTime) => { this.onSliderValueChanged(currentTime) }}
-                            /> */}
+                            <Slider
+                                style={{flex: 1}}
+                                maximumTrackTintColor={'#999999'}
+                                minimumTrackTintColor={'#10aeff'}
+                                thumbTintColor={'#10aeff'}
+                                thumbStyle={{width: 8, height: 8}}
+                                minimumValue={0}
+                                maximumValue={this.state.duration}
+                                value={this.state.currentTime}
+                                onValueChange={(currentTime) => { this.onSliderValueChanged(currentTime) }}
+                                />
                             <Text style={styles.Time}>{formatTime(this.state.duration)}</Text>
                             <TouchableOpacity style={styles.ShrinkControl} activeOpacity={0.3} onPress={() => { this.onControlShrinkPress() }}>
                                 {
@@ -285,7 +286,6 @@ export default class Player extends Component {
                             </TouchableOpacity>
                         </View> : null
                 }
-
                 </View>
                 {
                     this.state.isFullScreen ? null
