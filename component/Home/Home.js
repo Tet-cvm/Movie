@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, Dimensions, findNodeHandle, UIManager, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
+import {StatusBar, StyleSheet, Dimensions, findNodeHandle, UIManager, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 
 export default class Home extends Component {
     constructor(props) {
@@ -33,8 +33,9 @@ export default class Home extends Component {
     render() {
         return (
             <View style={styles.Home} onLayout={(event) => this._onLayout(event)}>
+                <StatusBar backgroundColor={'#10aeff'} hidden={false} />
                 <View style={styles.Header}>
-                    <Text style={styles.Title}>Movie</Text>
+                    <Text style={styles.Title}>电影</Text>
                 </View>
                 <View style={[styles.Panel, {height: this.state.height}]}>
                     <FlatList
@@ -42,7 +43,7 @@ export default class Home extends Component {
                         numColumns={3}
                         keyExtractor={(item, index) => item.id.toString()}
                         renderItem={({item}) =>
-                            <TouchableHighlight style={styles.Items} underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Detail', {id: item.id})}}>
+                            <TouchableHighlight style={styles.Items} underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Player', {id: item.id})}}>
                                 <View style={styles.List}>
                                     <Image style={styles.Photo} source={{uri: item.image}}/>
                                     <Text style={styles.Caption}>{item.title}</Text>
@@ -61,14 +62,14 @@ const styles = StyleSheet.create({
         flex: 1
     },
     Header: {
-        height: 45,
-        justifyContent: 'center',
+        height: 34,
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#10aeff',        
+        backgroundColor: '#10aeff'
     },
     Title: {
         fontSize: 18,
-        color: '#ffffff'
+        color: '#f5f5f5'
     },
     Panel: {
 

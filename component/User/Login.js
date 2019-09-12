@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, Dimensions, KeyboardAvoidingView, TouchableHighlight, Alert} from 'react-native';
+import {StatusBar, StyleSheet, Text, View, Dimensions, KeyboardAvoidingView, TouchableHighlight, Alert} from 'react-native';
 import Round from '../Common/Round';
 import Button from '../Common/Button';
+import Public from '../Common/Public'
 import { Hoshi } from 'react-native-textinput-effects';
-import Toast from 'react-native-root-toast';
-import Spinner from 'react-native-loading-spinner-overlay';
 
 export default class Login extends Component {
     constructor(props) {
@@ -15,13 +14,12 @@ export default class Login extends Component {
             verifyAccount: false,
             verifyPassword: false,
             disable: true,
-            spinner: false,
-            toast: true,
         }
     }
 
     componentDidMount() {
-        this._onToast('账户密码输入有误');
+        // Public.toast('账户密码输入有误');
+        // Public.loadShow('登录中...');
     }
 
     _onAccount = (account)=> {
@@ -62,10 +60,10 @@ export default class Login extends Component {
 
     _onSubmit = ()=> {
         if (this.state.verifyAccount && this.state.verifyPassword) {
-            this.setState({spinner: true});
+            Public.loadShow('登录中...');
             this._onFetch();
         } else {
-            this._onToast('账户密码输入有误');
+            Public.toast('账户密码输入有误');
         }
     }
 
@@ -73,31 +71,19 @@ export default class Login extends Component {
         fetch('https://mdqygl.cn/Test/Chapter000.json')
         .then((response) => response.json())
         .then((res) => {
-            this.setState({spinner: false}, function() {
-                this.props.navigation.goBack();
-            });
+            Public.loadHide();
+            this.props.navigation.goBack();
         })
         .catch((error) =>{
-            this.setState({spinner: false}, function() {
-                this._onToast('网络错误~');
-            });
-        });
-    }
-
-    _onToast = (message)=> {
-        Toast.show(message, {
-            duration: Toast.durations.LONG,
-            position: Toast.positions.CENTER,
-            shadow: true,
-            animation: true,
-            hideOnPress: true,
-            delay: 0
+            Public.loadHide();
+            Public.toast('网络错误~');
         });
     }
 
     render() {
         return (
             <View style={styles.Login}>
+                <StatusBar backgroundColor={'#ffffff'} barStyle={'dark-content'} hidden={false} />
                     <Round navigation={this.props.navigation}/>
                     <KeyboardAvoidingView style={styles.Panel} keyboardVerticalOffset={-130} behavior="padding">
                         <View style={styles.Contain}>
@@ -175,27 +161,6 @@ export default class Login extends Component {
                                 />
                         </View>
                 </KeyboardAvoidingView>
-                <Spinner
-                    visible={this.state.spinner}
-                    textContent={'登录中...'}
-                    panelStyle={{
-                        width: 82,
-                        height: 82,
-                        borderRadius: 5,
-                        backgroundColor: 'rgba(0, 0, 0, 0.88)'
-                    }}
-                    textStyle={{
-                        top: 26,
-                        fontSize: 13,
-                        color: '#ffffff',
-                        height: 'auto',
-                        fontWeight:'normal'
-                    }}
-                    color={'#ffffff'}
-                    animation={'fade'}
-                    overlayColor={'rgba(0, 0, 0, 0.38)'}
-                    size={'small'}
-                    />
             </View>
         )
     }

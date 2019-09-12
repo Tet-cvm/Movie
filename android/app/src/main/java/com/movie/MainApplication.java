@@ -1,6 +1,7 @@
 package com.movie;
 
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
 
 import android.app.Application;
 
@@ -28,7 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
+            new MainReactPackage(),
+            new LinearGradientPackage(),
             new OrientationPackage(),
             new ReactVideoPackage(),
             new ReanimatedPackage(),

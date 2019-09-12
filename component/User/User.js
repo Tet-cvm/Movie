@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
+import {StatusBar, StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -13,6 +13,7 @@ export default class User extends Component {
     render() {
         return (
             <View style={styles.User}>
+                <StatusBar backgroundColor={'#10aeff'} hidden={false} />
                 <View style={styles.Login}>
                     <View style={styles.Myself}>
                         <Text style={styles.Self}>我的</Text>
@@ -63,13 +64,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#10aeff'
     },
     Myself: {
-        height: 40,
-        justifyContent: 'center',
+        height: 34,
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
     Self: {
-        fontSize: 16,
-        color: '#ffffff'
+        fontSize: 18,
+        color: '#f5f5f5'
     },
     Contain: {
         height: 72

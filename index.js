@@ -73,7 +73,12 @@ const AppNavigator = createStackNavigator({
     Info: Info,
     Login: Login,
     Detail: Detail,
-    Player: Player
+    Player: {
+        screen: Player,
+        navigationOptions: {
+            headerTintColor: 'red'
+        }
+    }
 }, {
     headerMode: 'none',
     mode: 'modal'
