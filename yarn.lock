@@ -5032,6 +5032,11 @@ react-native-slider@^0.11.0:
   dependencies:
     prop-types "^15.5.6"
 
+react-native-splash-screen@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npm.taobao.org/react-native-splash-screen/download/react-native-splash-screen-3.2.0.tgz#d47ec8557b1ba988ee3ea98d01463081b60fff45"
+  integrity sha1-1H7IVXsbqYjuPqmNAUYwgbYP/0U=
+
 react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   version "1.4.1"
   resolved "https://registry.npm.taobao.org/react-native-tab-view/download/react-native-tab-view-1.4.1.tgz#f113cd87485808f0c991abec937f70fa380478b9"

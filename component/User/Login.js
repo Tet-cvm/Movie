@@ -68,16 +68,36 @@ export default class Login extends Component {
     }
 
     _onFetch = ()=> {
-        fetch('https://mdqygl.cn/Test/Chapter000.json')
+        fetch('https://wind.slogger.cn/signin/register', {
+            mode: "cors",
+            // credentials: 'include'
+        })
         .then((response) => response.json())
         .then((res) => {
-            Public.loadHide();
-            this.props.navigation.goBack();
+            Alert.alert(JSON.stringify(res));
         })
         .catch((error) =>{
-            Public.loadHide();
-            Public.toast('网络错误~');
-        });
+            Alert.alert(JSON.stringify(error));
+		});
+
+
+
+        // fetch('https://mdqygl.cn/application/controllers/Test.php', {
+        // // fetch('https://wind.slogger.cn/signin/register', {
+        //     mode: 'cors',
+        //     credentials: 'include'
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     Alert.alert(JSON.stringify(res));
+        //     // Public.loadHide();
+        //     // this.props.navigation.goBack();
+        // })
+        // .catch((error) =>{
+        //     Alert.alert(JSON.stringify(error));
+        //     Public.loadHide();
+        //     // Public.toast('网络错误~');
+        // });
     }
 
     render() {

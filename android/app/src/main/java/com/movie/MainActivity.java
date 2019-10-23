@@ -1,6 +1,10 @@
 package com.movie;
 
+import android.os.Bundle;
+
 import com.facebook.react.ReactActivity;
+
+import org.devio.rn.splashscreen.SplashScreen;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -22,5 +26,11 @@ public class MainActivity extends ReactActivity {
         Intent intent = new Intent("onConfigurationChanged");
         intent.putExtra("newConfig", newConfig);
         this.sendBroadcast(intent);
+    }
+
+   @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen.show(this);  // here
+        super.onCreate(savedInstanceState);
     }
 }

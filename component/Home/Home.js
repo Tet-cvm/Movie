@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {StatusBar, StyleSheet, Dimensions, findNodeHandle, UIManager, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 
 export default class Home extends Component {
@@ -11,6 +12,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
+        SplashScreen.hide();
         this._onFetch();
     }
 
