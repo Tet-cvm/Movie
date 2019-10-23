@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import '../Config/Config';
 import {StatusBar, StyleSheet, Text, View, Dimensions, KeyboardAvoidingView, TouchableHighlight, Alert} from 'react-native';
 import Round from '../Common/Round';
 import Button from '../Common/Button';
@@ -68,36 +69,34 @@ export default class Login extends Component {
     }
 
     _onFetch = ()=> {
-        fetch('https://wind.slogger.cn/signin/register', {
+        var data = {
+            account: this.state.account,
+            password: this.state.password
+        };
+
+        fetch(APP_MOVIE.base_url + '/signin/register', {
+            method: 'POST',
             mode: "cors",
-            // credentials: 'include'
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
         })
         .then((response) => response.json())
         .then((res) => {
-            Alert.alert(JSON.stringify(res));
+            if (res.status) {
+                Public.loadHide();
+                Public.toast(res.message);
+                this.props.navigation.goBack();
+            } else {
+                Public.loadHide();
+                Public.toast(res.message);
+            }
         })
         .catch((error) =>{
-            Alert.alert(JSON.stringify(error));
+            Public.loadHide();
+            Public.toast('网络错误~');
 		});
-
-
-
-        // fetch('https://mdqygl.cn/application/controllers/Test.php', {
-        // // fetch('https://wind.slogger.cn/signin/register', {
-        //     mode: 'cors',
-        //     credentials: 'include'
-        // })
-        // .then((response) => response.json())
-        // .then((res) => {
-        //     Alert.alert(JSON.stringify(res));
-        //     // Public.loadHide();
-        //     // this.props.navigation.goBack();
-        // })
-        // .catch((error) =>{
-        //     Alert.alert(JSON.stringify(error));
-        //     Public.loadHide();
-        //     // Public.toast('网络错误~');
-        // });
     }
 
     render() {
