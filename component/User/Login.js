@@ -5,6 +5,7 @@ import Round from '../Common/Round';
 import Button from '../Common/Button';
 import Public from '../Common/Public'
 import { Hoshi } from 'react-native-textinput-effects';
+import DeviceInfo from 'react-native-device-info';
 
 export default class Login extends Component {
     constructor(props) {
@@ -15,10 +16,26 @@ export default class Login extends Component {
             verifyAccount: false,
             verifyPassword: false,
             disable: true,
+            brand: '',
+            system: '',
+            uniqueid: ''
         }
     }
 
     componentDidMount() {
+        // 设备品牌 & xiaomi
+        const brand = DeviceInfo.getBrand();
+        // 系统名称 & ios & Android
+        const system = DeviceInfo.getSystemName();
+        // 获取设备唯一ID
+        const uniqueid = DeviceInfo.getUniqueId();
+
+        this.setState({
+            brand: brand,
+            system: system,
+            uniqueid: uniqueid
+        });
+
         // Public.toast('账户密码输入有误');
         // Public.loadShow('登录中...');
     }
@@ -70,6 +87,9 @@ export default class Login extends Component {
 
     _onFetch = ()=> {
         var data = {
+            brand: this.state.brand,
+            system: this.state.system,
+            uniqueid: this.state.uniqueid,
             account: this.state.account,
             password: this.state.password
         };
@@ -87,6 +107,7 @@ export default class Login extends Component {
             if (res.status) {
                 Public.loadHide();
                 Public.toast(res.message);
+                
                 this.props.navigation.goBack();
             } else {
                 Public.loadHide();

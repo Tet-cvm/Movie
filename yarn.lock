@@ -4946,6 +4946,11 @@ react-loading@^2.0.3:
   resolved "https://registry.npm.taobao.org/react-loading/download/react-loading-2.0.3.tgz#e8138fb0c3e4674e481b320802ac7048ae14ffb9"
   integrity sha1-6BOPsMPkZ05IGzIIAqxwSK4U/7k=
 
+react-native-device-info@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.npm.taobao.org/react-native-device-info/download/react-native-device-info-5.0.1.tgz#e941424f9ab18688fb343dc1542b2cfaaabb330a"
+  integrity sha1-6UFCT5qxhoj7ND3BVCss+qq7Mwo=
+
 react-native-gesture-handler@1.2.1:
   version "1.2.1"
   resolved "https://registry.npm.taobao.org/react-native-gesture-handler/download/react-native-gesture-handler-1.2.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Freact-native-gesture-handler%2Fdownload%2Freact-native-gesture-handler-1.2.1.tgz#9c48fb1ab13d29cece24bbb77b1e847eebf27a2b"

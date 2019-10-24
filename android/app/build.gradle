@@ -140,6 +140,9 @@ android {
 }
 
 dependencies {
+    implementation(project(':react-native-device-info')) {
+        exclude group: 'com.google.android.gms'
+    }
     implementation project(':react-native-splash-screen')
     implementation project(':react-native-orientation')
     implementation project(':react-native-video')
