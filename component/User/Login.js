@@ -3,7 +3,7 @@ import '../Config/Config';
 import {StatusBar, StyleSheet, Text, View, Dimensions, KeyboardAvoidingView, TouchableHighlight, Alert} from 'react-native';
 import Round from '../Common/Round';
 import Button from '../Common/Button';
-import Public from '../Common/Public'
+import Public from '../Common/Public';
 import { Hoshi } from 'react-native-textinput-effects';
 import DeviceInfo from 'react-native-device-info';
 
@@ -35,9 +35,6 @@ export default class Login extends Component {
             system: system,
             uniqueid: uniqueid
         });
-
-        // Public.toast('账户密码输入有误');
-        // Public.loadShow('登录中...');
     }
 
     _onAccount = (account)=> {
@@ -107,8 +104,8 @@ export default class Login extends Component {
             if (res.status) {
                 Public.loadHide();
                 Public.toast(res.message);
-                
                 this.props.navigation.goBack();
+                this.props.navigation.state.params.refresh();
             } else {
                 Public.loadHide();
                 Public.toast(res.message);

@@ -1,15 +1,86 @@
 import React, { Component } from 'react';
-import {StatusBar, StyleSheet, Text, View, Image, TouchableHighlight} from 'react-native';
-
+import '../Config/Config';
+import {StatusBar, StyleSheet, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Public from '../Common/Public';
+import DeviceInfo from 'react-native-device-info';
 
 export default class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            nick: '',
+            icon: 'https://mdqygl.cn/Test/Logo.png',
+            level: Number,
             loginStatus:  false //true登陆了 false未登陆
         }
     }
+
+    // 返回刷新
+    _refresh = ()=> {
+        this._onFetch();
+    }
+
+    componentWillMount() {
+        this._onFetch();
+    }
+
+    _onFetch = ()=> {
+        // 获取设备唯一ID
+        const uniqueid = DeviceInfo.getUniqueId();
+        // 请求用户信息
+        const data = {
+            uniqueid: uniqueid,
+        };
+
+        fetch(APP_MOVIE.base_url + '/signin/member', {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            })
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            if (res.status) {
+                this.setState({
+                    nick: res.data.nick,
+                    icon: res.data.icon,
+                    level: this._onLevel(res.data.level),
+                }, function() {
+                    this.setState({
+                        loginStatus: true
+                    })
+                })
+            }
+        })
+        .catch((error) =>{
+            Public.toast('网络错误~');
+		});
+    }
+
+    _onLevel = (level)=> {
+        switch(level)
+        {
+            case 1:
+                return '侍从';
+            break;
+            case 2:
+                return '剑士';
+            break;
+            case 3:
+                return '骑士';
+            break;
+            case 4:
+                return '圣骑士';
+            break;
+            case 5:
+                return '圣主';
+            break;
+        }
+    }
+
     render() {
         return (
             <View style={styles.User}>
@@ -23,19 +94,23 @@ export default class User extends Component {
                             (<TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Info')}}>
                                 <View style={styles.Signin}>
                                     <View style={styles.Panel}>
-                                        <Image style={styles.Photo} source={{uri: "https://mdqygl.cn/Test/Logo.png"}}/>
+                                        <Image style={styles.Photo} source={{uri: this.state.icon}}/>
                                         <View style={styles.Msg}>
-                                            <Text style={styles.Name}>白衣沽酒绮罗生</Text>
-                                            <Text style={styles.Phone}>上海</Text>
+                                            <Text style={styles.Name}>{ this.state.nick }</Text>
+                                            <Text style={styles.Phone}>等级: { this.state.level }</Text>
                                         </View>
                                     </View>
                                     <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#ffffff'/>
                                 </View>
                             </TouchableHighlight>):
-                            (<TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Login')}}>
+                            (<TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Login', {
+                                refresh:()=>{
+                                    this._refresh();
+                                }
+                            })}}>
                                 <View style={styles.Signin}>
                                     <View style={styles.Panel}>
-                                        <Image style={styles.Photo} source={{uri: "https://mdqygl.cn/Test/Logo.png"}}/>
+                                        <Image style={styles.Photo} source={{uri: this.state.icon}}/>
                                         <View style={styles.Msg}>
                                             <Text style={styles.Enter}>注册 / 登录</Text>
                                         </View>
@@ -88,18 +163,20 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         width: 58,
         height: 58,
-        borderWidth: 1.2,
+        borderWidth: 0.5,
         borderColor: '#bfbfbf',
-        borderRadius: 3
+        borderRadius: 3,
+        backgroundColor: '#ffffff'
     },
     Msg: {
         marginLeft: 10
     },
     Name: {
-        fontSize: 15,
+        fontSize: 18,
         color: '#ffffff'
     },
     Phone: {
+        marginTop: 9,
         fontSize: 14,
         color: '#ffffff'
     },
