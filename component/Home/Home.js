@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import {StatusBar, StyleSheet, Dimensions, findNodeHandle, UIManager, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
+import {StatusBar, StyleSheet, Dimensions, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
+import '../Config/Config';
 
 export default class Home extends Component {
     constructor(props) {
@@ -17,19 +18,36 @@ export default class Home extends Component {
     }
 
     _onLayout = (event)=> {
-        let height = event.nativeEvent.layout.height-45;
+        let height = event.nativeEvent.layout.height - 34;
         this.setState({height: height});
     }
 
     _onFetch = ()=> {
-        fetch('https://mdqygl.cn/Test/Chapter000.json')
+        fetch(APP_MOVIE.base_url + '/home/movie', {
+            method: 'POST',
+            mode: "cors",
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            })
+        })
         .then((response) => response.json())
         .then((res) => {
-            this.setState({movie: res.data});
+            if (res.status) {
+                this.setState({movie: res.data});
+            } else {
+                Public.toast(res.message);
+            }
         })
         .catch((error) =>{
-
+            Public.toast('网络错误~');
         });
+    }
+
+    _onFilter = (name)=> {
+        if (name.length > 7) {
+            name = name.substring(0, 7) + '..';
+        }
+        return name;
     }
 
     render() {
@@ -37,7 +55,7 @@ export default class Home extends Component {
             <View style={styles.Home} onLayout={(event) => this._onLayout(event)}>
                 <StatusBar backgroundColor={'#10aeff'} hidden={false} />
                 <View style={styles.Header}>
-                    <Text style={styles.Title}>电影</Text>
+                    <Text style={styles.Title}>漫动画</Text>
                 </View>
                 <View style={[styles.Panel, {height: this.state.height}]}>
                     <FlatList
@@ -47,8 +65,8 @@ export default class Home extends Component {
                         renderItem={({item}) =>
                             <TouchableHighlight style={styles.Items} underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Player', {id: item.id})}}>
                                 <View style={styles.List}>
-                                    <Image style={styles.Photo} source={{uri: item.image}}/>
-                                    <Text style={styles.Caption}>{item.title}</Text>
+                                    <Image style={styles.Photo} source={{uri: item.poster}}/>
+                                    <Text style={styles.Caption}>{ this._onFilter(item.name) }</Text>
                                 </View>
                             </TouchableHighlight>
                         }
@@ -86,11 +104,11 @@ const styles = StyleSheet.create({
     },
     Photo: {
         width: 108,
-        height: 136,
+        height: 152.5,
         borderRadius: 3
     },
     Caption: {
-        marginTop: 2,
+        marginTop: 3,
         fontSize: 13,
         color: '#666666'
     }

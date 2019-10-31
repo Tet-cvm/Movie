@@ -8,6 +8,7 @@ import android.app.Application;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 
 import com.facebook.react.ReactApplication;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
             new RNDeviceInfo(),
             new MainReactPackage(),
+            new PickerPackage(),
             new SplashScreenReactPackage(),
             new LinearGradientPackage(),
             new OrientationPackage(),

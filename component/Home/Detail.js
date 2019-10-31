@@ -1,13 +1,41 @@
 import React, { Component } from 'react';
 import {StyleSheet, Dimensions, Text, View, TouchableHighlight, Alert} from 'react-native';
-
+import '../Config/Config';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Public from '../Common/Public';
 
 export default class Detail extends Component {
     constructor(props) {
         super(props)
         this.state = {
+
         }
+    }
+
+    _onCollect = ()=> {
+        const data = {
+            id: this.props.id,
+            uniqueid: APP_MOVIE.uniqueid
+        };
+        fetch(APP_MOVIE.base_url + '/home/collect', {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            })
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            if (res.status) {
+                this.props.onRefLove(res.collect);
+                Public.toast(res.message);
+            }
+        })
+        .catch((error) =>{
+            Public.toast('网络错误~');
+        });
     }
 
     render() {
@@ -24,20 +52,31 @@ export default class Detail extends Component {
                         width: 26,
                         height: 2,
                         bottom: 0,
-                        marginLeft: ((Dimensions.get('window').width / 3) -26) / 2,
+                        marginLeft: ((Dimensions.get('window').width / 2) -26) / 2,
                         backgroundColor: '#10aeff'
                     }}
                     tabBarInactiveTextColor={'#333333'}
                     tabBarActiveTextColor={'#10aeff'}
                     >
                     <View tabLabel="推荐" style={styles.Suggest}>
-                        <Text>1111111</Text>
+                        <Text>{JSON.stringify(this.props.data)}</Text>
                     </View>
-                    <View tabLabel="剧集" style={styles.Gather}>
+                    {/* <View tabLabel="剧集" style={styles.Gather}>
                         <Text>2222222</Text>
-                    </View>
+                    </View> */}
                     <View tabLabel="详情" style={styles.Matter}>
-                        <Text>3333333</Text>
+                        <View style={styles.Collect}>
+                            <View>
+                                <Text style={styles.Star}>作者: { this.props.data.star }</Text>
+                                <Text style={styles.Series}>类型: { this.props.data.series }</Text>
+                            </View>
+                            <TouchableHighlight underlayColor="transparent" style={styles.Love} onPress={()=>{ this._onCollect() }}>
+                                <AntDesign name='hearto' size={22} color={this.props.data.collect ? '#10aeff':'#333333'}/>
+                            </TouchableHighlight>
+                        </View>
+                        <View>
+                            <Text style={styles.Describe}>简介: { this.props.data.describe }</Text>
+                        </View>
                     </View>
                 </ScrollableTabView> 
             </View>
@@ -61,5 +100,36 @@ const styles = StyleSheet.create({
     Matter: {
         flex: 1,
         backgroundColor: '#f5f5f5'
+    },
+    Collect: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    Love: {
+        marginRight: 24
+    },
+    Star: {
+        paddingLeft: 12,
+        paddingRight: 12,
+        marginTop: 14,
+        fontSize: 15,
+        color: '#333333',
+        fontWeight: '400'
+    },
+    Series: {
+        paddingLeft: 12,
+        paddingRight: 12,
+        marginTop: 8,
+        fontSize: 14,
+        color: '#666666',
+    },
+    Describe: {
+        paddingLeft: 12,
+        paddingRight: 12,
+        marginTop: 8,
+        fontSize: 14,
+        color: '#666666',
+        lineHeight: 20,
     }
 })

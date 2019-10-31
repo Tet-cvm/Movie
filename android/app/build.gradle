@@ -96,6 +96,8 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -109,6 +111,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        targetSdkVersion 27
     }
     splits {
         abi {
@@ -140,6 +144,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-image-crop-picker')
     implementation(project(':react-native-device-info')) {
         exclude group: 'com.google.android.gms'
     }

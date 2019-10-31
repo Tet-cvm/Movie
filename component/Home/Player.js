@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, StatusBar, Dimensions, ActivityIndicator, TouchableHighlight, View, Image, Text, Alert} from 'react-native';
+import '../Config/Config';
 
 import Detail from '../Home/Detail'
 import Public from '../Common/Public'
@@ -32,6 +33,8 @@ export default class Player extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            data: {},
+            id: Number,
             loadComplete: false, // 数据接口是否加载完成
             videoUrl: "#", // 视频地址
             videoCover: "https://mdqygl.cn/Movie/videoCover.jpg", // 视频封面
@@ -61,26 +64,56 @@ export default class Player extends Component {
     }
 
     componentWillUnmount() {
+        this._onHistory(); // 记录观看历史
         this.setState = (state, callback) => { // 防止内存泄漏
             return;
         }
     }
-    
 
-    _onFetch = ()=> {
-        fetch('https://mdqygl.cn/Movie/movie.json')
+    _onHistory = ()=> {
+        const data = {
+            id: this.state.id,
+            uniqueid: APP_MOVIE.uniqueid
+        };
+        fetch(APP_MOVIE.base_url + '/home/history', {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            })
+        })
         .then((response) => response.json())
         .then((res) => {
-            if (res.code == 0) {
-                setTimeout(()=>{
-                    this.setState({
-                        videoUrl: res.data.videoUrl,
-                        loadComplete: true,
-                    });
-                }, 3000);
-            } else {
-                Public.toast('网络错误~');
-            }
+        })
+        .catch((error) =>{
+            Public.toast('网络错误~');
+        });
+    }
+
+    _onFetch = ()=> {
+        const data = {
+            id: this.state.id,
+            uniqueid: APP_MOVIE.uniqueid
+        };
+        fetch(APP_MOVIE.base_url + '/home/play', {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            })
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            setTimeout(()=>{
+                this.setState({
+                    data: res.data,
+                    // videoUrl: res.data.domains,
+                    // videoUrl: res.data.domains[0],
+                    loadComplete: true,
+                });
+            }, 3000);
         })
         .catch((error) =>{
             Public.toast('网络错误~');
@@ -215,6 +248,13 @@ export default class Player extends Component {
         this.FadeOut = ref;
     }
 
+    _onRefLove = (value)=> {
+        let change = Object.assign({}, this.state.data, {collect: value})
+        this.setState({
+            data: change
+        });
+    }
+
     render() {
         return (
             <View style={styles.Player} onLayout={this._onLayout}>
@@ -321,7 +361,7 @@ export default class Player extends Component {
                 </View>
                 {
                     this.state.isFullScreen ? null
-                    : <Detail/>
+                    : <Detail data={this.state.data} id={this.state.id} onRefLove={this._onRefLove} />
                     // :<View style={{backgroundColor: 'pink', flex: 1}}></View>
                 }
             </View>

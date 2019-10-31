@@ -1,34 +1,114 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, Image, Switch, TouchableHighlight, Alert} from 'react-native';
+import '../Config/Config';
+import {StyleSheet, Text, View, Image, Switch, TextInput, TouchableHighlight, Alert} from 'react-native';
 import Back from '../Common/Back';
-import DeviceInfo from 'react-native-device-info';
+import ImagePicker from 'react-native-image-crop-picker';
 
 export default class Info extends Component {
     constructor(props) {
         super(props);
         this.state = {
             nick: '',
-            icon: 'https://mdqygl.cn/Test/Logo.png',
-            sex: '',
+            icon: '',
+            has_icon: false,
+            sex: Boolean,
             signature: '',
         }
-
-    }
-
-    _onMessage = ()=> {
-
     }
 
     componentWillMount() {
         this._onFetch();
     }
 
+    _onImage = ()=> {
+        ImagePicker.openPicker({
+            width: 290,
+            height: 290,
+            cropping: true
+        }).then(image => {
+            this.setState({
+                has_icon: true,
+                icon: image.path
+            })
+
+            let file = {uri: image.path, type: 'multipart/form-data', name: 'image.png'};
+            let data = new FormData();
+            data.append('file', file);
+            data.append('uniqueid', APP_MOVIE.uniqueid);
+
+            fetch(APP_MOVIE.base_url + '/signin/upload', {
+                method: 'POST',
+                mode: "cors",
+                body: data,
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                }
+            })
+            .then((res) => {
+                // this.setState({
+                //     test: JSON.stringify(res)
+                // })
+                // Alert.alert(JSON.stringify(res.json()));
+            })
+            .catch((error) =>{
+                Public.toast('网络错误~');
+            });
+
+        });
+    }
+
+    _onNick = ()=> {
+        const data = {
+            type: 0,
+            nick: this.state.nick,
+            uniqueid: APP_MOVIE.uniqueid
+        };
+        this._onChange(data);
+    }
+
+    _onSex = ()=> {
+        const data = {
+            type: 1,
+            sex: this.state.sex ? 0 : 1,
+            uniqueid: APP_MOVIE.uniqueid
+        };
+        this._onChange(data);
+    }
+
+    _onSignature = ()=> {
+        const data = {
+            type: 2,
+            signature: this.state.signature,
+            uniqueid: APP_MOVIE.uniqueid
+        };
+        this._onChange(data);
+    }
+
+    _onChange = (data)=> {
+        fetch(APP_MOVIE.base_url + '/signin/modify', {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            })
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            if (!res.status) {
+                Public.toast(res.message);
+            }
+        })
+        .catch((error) =>{
+            Public.toast('网络错误~');
+		});
+
+    }
+
     _onFetch = ()=> {
-        // 获取设备唯一ID
-        const uniqueid = DeviceInfo.getUniqueId();
         // 请求用户信息
         const data = {
-            uniqueid: uniqueid,
+            uniqueid: APP_MOVIE.uniqueid
         };
 
         fetch(APP_MOVIE.base_url + '/signin/member', {
@@ -36,32 +116,20 @@ export default class Info extends Component {
             mode: "cors",
             body: JSON.stringify(data),
             headers: new Headers({
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             })
         })
         .then((response) => response.json())
         .then((res) => {
-            // Alert.alert(JSON.stringify(res));
-
             if (res.status) {
                 this.setState({
                     icon: res.data.icon,
+                    has_icon: (res.data.icon == '') ? false : true,
+                    nick: res.data.nick,
+                    sex: res.data.sex,
+                    signature: res.data.signature
                 })
             }
-
-
-            // if (res.status) {
-            //     this.setState({
-            //         nick: res.data.nick,
-            //         icon: res.data.icon,
-            //         sex:  res.data.sex,
-            //         signature: res.data.signature,
-            //     }, function() {
-            //         this.setState({
-            //             loginStatus: true
-            //         })
-            //     })
-            // }
         })
         .catch((error) =>{
             Public.toast('网络错误~');
@@ -71,29 +139,37 @@ export default class Info extends Component {
     render() {
         return (
             <View style={styles.Info}>
-                <Back navigation={this.props.navigation}/>
+                <Back navigation={this.props.navigation} active={true}/>
                 <View style={styles.Container}>
-                    <TouchableHighlight underlayColor='#d9d9d9' onPress={()=>this._onMessage()}>
+                    <TouchableHighlight underlayColor='transparent' onPress={()=>this._onImage()}>
                         <View style={styles.Item}>
                             <View style={styles.Left}>
                                 <Text>头像</Text>
                             </View>
                             <View style={styles.Right}>
-                                <Image style={styles.Pic} source={{uri: this.state.icon}}/>
+                            {
+                                this.state.has_icon
+                                ? <Image style={styles.Pic} source={{uri: this.state.icon}}/>
+                                : <Image style={styles.Pic} source={require('../static/image/default_member.png')}/>
+                            }
                             </View>
                         </View>
                     </TouchableHighlight>
-                    {/* <TouchableHighlight underlayColor='#d9d9d9' onPress={()=>this._onMessage()}>
-                        <View style={styles.Item}>
-                            <View style={styles.Left}>
-                                <Text>昵称</Text>
-                            </View>
-                            <View style={styles.Right}>
-                                <Text style={styles.Txt}>陨落心炎</Text>
-                            </View>
+                    <View style={styles.Item}>
+                        <View style={styles.Left}>
+                            <Text>昵称</Text>
                         </View>
-                    </TouchableHighlight> */}
-                    {/* <View style={styles.Item}>
+                        <View style={styles.Right}>
+                            <TextInput
+                                maxLength={8}
+                                style={{height: 48}}
+                                onChangeText={(nick) => this.setState({nick})}
+                                onBlur={()=>this._onNick()}
+                                value={this.state.nick}
+                                />
+                        </View>
+                    </View>
+                    <View style={styles.Item}>
                         <View style={styles.Left}>
                             <Text>性别</Text>
                         </View>
@@ -101,27 +177,33 @@ export default class Info extends Component {
                             <View style={{flexDirection: 'row'}}>
                             <View style={styles.Right}><Text style={styles.Txt}>{ this.state.sex ? "男" : "女" }</Text></View>
                             <Switch
-                                style={{backgroundColor: '#f43530', borderRadius: 16}}
-                                trackColor={'#f43530'}
+                                style={{backgroundColor: 'transparent', borderRadius: 16}}
+                                trackColor={{true: '#f2f2f2', false: '#f2f2f2'}}
+                                thumbColor={'#e5e5e5'}
                                 value={this.state.sex}
                                 onValueChange={()=>{
-                                    this.setState({sex: !this.state.sex})
+                                    this.setState({sex: !this.state.sex}, function() {
+                                        this._onSex();
+                                    })
                                 }}
                             />
                             </View>
                         </View>
-                    </View> */}
-                    {/* <TouchableHighlight underlayColor='#d9d9d9' onPress={()=>this._onMessage()}>
-                        <View style={[styles.Item, styles.Signature]}>
-                            <View style={styles.Left}>
-                                <Text>签名</Text>
-                            </View>
-                            <View style={[styles.Right, styles.Motto]}>
-                                <Text style={styles.Txt}>我本是舒碧湖的砍柴人</Text>
-                            </View>
+                    </View>
+                    <View style={[styles.Item, styles.Signature]}>
+                        <View style={styles.Left}>
+                            <Text>签名</Text>
                         </View>
-                    </TouchableHighlight> */}
-
+                        <View style={[styles.Right, styles.Motto]}>
+                        <TextInput
+                            maxLength={30}
+                            style={{height: 48}}
+                            onChangeText={(signature) => this.setState({signature})}
+                            onBlur={()=>this._onSignature()}
+                            value={this.state.signature}
+                            />
+                        </View>
+                    </View>
                 </View>
             </View>
         )
@@ -154,7 +236,7 @@ const styles = StyleSheet.create({
     Pic: {
         width: 36,
         height: 36,
-        backgroundColor: 'gray',
+        backgroundColor: '#f5f5f5',
         borderRadius: 18
     },
     Left: {

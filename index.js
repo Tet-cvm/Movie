@@ -14,6 +14,9 @@ import Player from './component/Home/Player';
 import User from './component/User/User';
 import Info from './component/User/Info';
 import Login from './component/User/Login';
+import History from './component/User/History';
+import Collect from './component/User/Collect';
+import About from './component/User/About';
 
 import {name as appName} from './app.json';
 
@@ -21,9 +24,9 @@ const TabScreen = createBottomTabNavigator({
     Active: {
         screen: Active,
         navigationOptions: {
-            tabBarLabel: '活动',
+            tabBarLabel: '休闲',
             tabBarIcon: ({focused, tintColor})=>{
-                return <Feather name='feather' size={21} color={tintColor}/>;
+                return <AntDesign name='rest' size={21} color={tintColor}/>;
             }
         }
     },
@@ -32,7 +35,7 @@ const TabScreen = createBottomTabNavigator({
         navigationOptions: {
             tabBarLabel: '首页',
             tabBarIcon: ({focused, tintColor})=>{
-                return <AntDesign name='staro' size={21} color={tintColor}/>;
+                return <AntDesign name='home' size={21} color={tintColor}/>;
             }
         }
     },
@@ -72,13 +75,17 @@ const AppNavigator = createStackNavigator({
     User: User,
     Info: Info,
     Login: Login,
+    History: History,
+    Collect: Collect,
+    About: About,
     Detail: Detail,
-    Player: {
-        screen: Player,
-        navigationOptions: {
-            headerTintColor: 'red'
-        }
-    }
+    Player: Player
+    // Player: {
+    //     screen: Player,
+    //     navigationOptions: {
+    //         headerTintColor: 'red'
+    //     }
+    // }
 }, {
     headerMode: 'none',
     mode: 'modal'

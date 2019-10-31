@@ -3,14 +3,14 @@ import '../Config/Config';
 import {StatusBar, StyleSheet, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Public from '../Common/Public';
-import DeviceInfo from 'react-native-device-info';
 
 export default class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
             nick: '',
-            icon: 'https://mdqygl.cn/Test/Logo.png',
+            icon: '',
+            has_icon: false,
             level: Number,
             loginStatus:  false //true登陆了 false未登陆
         }
@@ -26,11 +26,10 @@ export default class User extends Component {
     }
 
     _onFetch = ()=> {
-        // 获取设备唯一ID
-        const uniqueid = DeviceInfo.getUniqueId();
         // 请求用户信息
         const data = {
-            uniqueid: uniqueid,
+            entry: 0,
+            uniqueid: APP_MOVIE.uniqueid,
         };
 
         fetch(APP_MOVIE.base_url + '/signin/member', {
@@ -47,6 +46,7 @@ export default class User extends Component {
                 this.setState({
                     nick: res.data.nick,
                     icon: res.data.icon,
+                    has_icon: (res.data.icon == '') ? false : true,
                     level: this._onLevel(res.data.level),
                 }, function() {
                     this.setState({
@@ -91,10 +91,18 @@ export default class User extends Component {
                     </View>
                     <View style={styles.Contain}>
                         {this.state.loginStatus ? 
-                            (<TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Info')}}>
+                            (<TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Info', {
+                                refresh:()=>{
+                                    this._refresh();
+                                }
+                            })}}>
                                 <View style={styles.Signin}>
                                     <View style={styles.Panel}>
-                                        <Image style={styles.Photo} source={{uri: this.state.icon}}/>
+                                        {
+                                            this.state.has_icon
+                                            ? <Image style={styles.Photo} source={{uri: this.state.icon}}/>
+                                            : <Image style={styles.Photo} source={require('../static/image/default_member.png')}/>
+                                        }
                                         <View style={styles.Msg}>
                                             <Text style={styles.Name}>{ this.state.nick }</Text>
                                             <Text style={styles.Phone}>等级: { this.state.level }</Text>
@@ -110,7 +118,7 @@ export default class User extends Component {
                             })}}>
                                 <View style={styles.Signin}>
                                     <View style={styles.Panel}>
-                                        <Image style={styles.Photo} source={{uri: this.state.icon}}/>
+                                        <Image style={styles.Photo} source={require('../static/image/default.png')}/>
                                         <View style={styles.Msg}>
                                             <Text style={styles.Enter}>注册 / 登录</Text>
                                         </View>
@@ -121,8 +129,31 @@ export default class User extends Component {
                         }
                     </View>
                 </View>
-                <View style={styles.List}>
-                    <Text>22222</Text>
+                <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('History')}}>
+                    <View style={styles.List}>
+                        <Text style={styles.History}>观看记录</Text>
+                        <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#d9d9d9'/>
+                    </View>
+                </TouchableHighlight>
+                <View style={styles.Inner}>
+                    <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Collect')}}>
+                        <View style={styles.List}>
+                            <Text style={styles.History}>收藏</Text>
+                            <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#d9d9d9'/>
+                        </View>
+                    </TouchableHighlight>
+                    <View style={styles.Linner}></View>
+                    <View style={styles.List}>
+                        <Text style={styles.History}>帮助与反馈</Text>
+                        <Text style={styles.Help}>QQ: 3271468090</Text>
+                    </View>
+                    <View style={styles.Linner}></View>
+                    <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('About')}}>
+                        <View style={styles.List}>
+                            <Text style={styles.History}>关于我们</Text>
+                            <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#d9d9d9'/>
+                        </View>
+                    </TouchableHighlight>
                 </View>
             </View>
         )
@@ -163,10 +194,8 @@ const styles = StyleSheet.create({
         marginLeft: 16,
         width: 58,
         height: 58,
-        borderWidth: 0.5,
-        borderColor: '#bfbfbf',
         borderRadius: 3,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#f5f5f5'
     },
     Msg: {
         marginLeft: 10
@@ -184,11 +213,34 @@ const styles = StyleSheet.create({
         marginRight: 16
     },
     List: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         height: 45,
         backgroundColor: '#ffffff'
+    },
+    History: {
+        marginLeft: 16,
+        fontSize: 16,
+        color: '#666666'
     },
     Enter: {
         fontSize: 18,
         color: '#ffffff'
+    },
+    Inner: {
+        marginTop: 22,
+        backgroundColor: '#ffffff',
+    },
+    Help: {
+        marginRight: 16,
+        fontSize: 16,
+        color: '#999999'
+    },
+    Linner: {
+        marginLeft: 16,
+        width: '100%',
+        height: 0.5,
+        backgroundColor: '#f5f5f5'
     }
 })

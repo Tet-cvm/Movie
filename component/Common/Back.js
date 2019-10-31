@@ -1,14 +1,27 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, Alert, View, TouchableHighlight} from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class Back extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+        }
+    }
+
+    _onBack = ()=> {
+        this.props.navigation.goBack();
+        if (this.props.active) {  // 返回刷新数据
+            this.props.navigation.state.params.refresh();
+        }
+    }
+
     render() {
         return (
             <View style={styles.Back}>
                 <View style={styles.Arrow}>
-                    <TouchableHighlight style={styles.History} underlayColor="transparent" onPress={()=>{this.props.navigation.goBack()}}>
+                    <TouchableHighlight style={styles.History} underlayColor="transparent" onPress={()=>this._onBack()}>
                         <Ionicons name='ios-arrow-back' size={26} color='#ffffff'/>
                     </TouchableHighlight>
                 </View>
