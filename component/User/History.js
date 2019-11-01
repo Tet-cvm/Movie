@@ -13,10 +13,10 @@ export default class History extends Component {
     }
 
     componentWillMount() {
-        this._onCollect();
+        this._onHistory();
     }
 
-    _onCollect = ()=> {
+    _onHistory = ()=> {
         const data = {
             uniqueid: APP_MOVIE.uniqueid
         };
