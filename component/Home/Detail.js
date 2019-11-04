@@ -91,7 +91,7 @@ export default class Detail extends Component {
                             <Text style={styles.Describe}>简介: { this.props.data.describe }</Text>
                         </View>
                     </View>
-                </ScrollableTabView> 
+                </ScrollableTabView>
             </View>
         )
     }

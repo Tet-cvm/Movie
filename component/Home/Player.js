@@ -3,6 +3,7 @@ import {StyleSheet, StatusBar, Dimensions, ActivityIndicator, TouchableHighlight
 import '../Config/Config';
 
 import Detail from '../Home/Detail'
+import Popup from '../Home/Popup'
 import Public from '../Common/Public'
 import {FadeIn, FadeOut} from '../Common/Fade'
 import Video from 'react-native-video';
@@ -35,6 +36,9 @@ export default class Player extends Component {
         this.state = {
             login: false, // 登录状态
             data: {},
+            circle: '#ffffff', // 广告按钮颜色
+            popup: false, // 是否显示广告
+            ikon: '', // 广告图
             id: Number,
             loadComplete: false, // 数据接口是否加载完成
             videoUrl: "#", // 视频地址
@@ -54,6 +58,34 @@ export default class Player extends Component {
 
     // 请求数据
     componentWillMount() {
+        // 广告
+        const data = {
+            uniqueid: APP_MOVIE.uniqueid
+        };
+        fetch(APP_MOVIE.base_url + '/popup/dialog', {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            })
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            if (res.status) {
+                this.setState({
+                    popup: res.popup,
+                    ikon: res.ikon,
+                    circle: res.circle
+                });
+            } else {
+                Public.toast(res.message);
+            }
+        })
+        .catch((error) =>{
+            Public.toast('网络错误~');
+        });
+        
         const {params} = this.props.navigation.state;
         this.setState({id: params.id}, function() {
             this._onFetch();
@@ -263,6 +295,12 @@ export default class Player extends Component {
         });
     }
 
+    _onRefPopup = ()=> {
+        this.setState({
+            popup: false
+        });
+    }
+
     render() {
         return (
             <View style={styles.Player} onLayout={this._onLayout}>
@@ -370,7 +408,9 @@ export default class Player extends Component {
                 {
                     this.state.isFullScreen ? null
                     : <Detail data={this.state.data} id={this.state.id} login={this.state.login} navigation={this.props.navigation} onRefLove={this._onRefLove} onRefLogin={this._onRefLogin} />
-                    // :<View style={{backgroundColor: 'pink', flex: 1}}></View>
+                }
+                {
+                    this.state.popup ? <Popup color={this.state.circle} ikon={this.state.ikon} onRefPopup={this._onRefPopup} /> : null
                 }
             </View>
         )
