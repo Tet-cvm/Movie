@@ -14,28 +14,41 @@ export default class Detail extends Component {
     }
 
     _onCollect = ()=> {
-        const data = {
-            id: this.props.id,
-            uniqueid: APP_MOVIE.uniqueid
-        };
-        fetch(APP_MOVIE.base_url + '/home/collect', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
+        if (this.props.login) {
+            const data = {
+                id: this.props.id,
+                uniqueid: APP_MOVIE.uniqueid
+            };
+            fetch(APP_MOVIE.base_url + '/home/collect', {
+                method: 'POST',
+                mode: "cors",
+                body: JSON.stringify(data),
+                headers: new Headers({
+                    'Content-Type': 'application/json',
+                })
             })
-        })
-        .then((response) => response.json())
-        .then((res) => {
-            if (res.status) {
-                this.props.onRefLove(res.collect);
-                Public.toast(res.message);
-            }
-        })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-        });
+            .then((response) => response.json())
+            .then((res) => {
+                if (res.status) {
+                    this.props.onRefLove(res.collect);
+                    Public.toast(res.message);
+                }
+            })
+            .catch((error) =>{
+                Public.toast('网络错误~');
+            });
+        } else {
+            this.props.navigation.navigate('Login', {
+                refresh:()=>{
+                    this._refresh();
+                }
+            });
+        }
+    }
+
+    // 登录返回刷新
+    _refresh = ()=> {
+        this.props.onRefLogin();
     }
 
     render() {

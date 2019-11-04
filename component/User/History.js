@@ -7,12 +7,17 @@ export default class History extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            record: ''
-
+            record: '',
+            scene: -1, // 0有数据 1无数据 2未登录
         }
     }
 
     componentWillMount() {
+        this._onHistory();
+    }
+
+    // 返回刷新
+    _refresh = ()=> {
         this._onHistory();
     }
 
@@ -30,9 +35,22 @@ export default class History extends Component {
         })
         .then((response) => response.json())
         .then((res) => {
-            this.setState({
-                record: res.data
-            });
+            if (res.status) {
+                this.setState({
+                    record: res.data,
+                    scene: 0
+                });
+            } else {
+                if (res.login) {
+                    this.setState({
+                        scene: 1
+                    });
+                } else {
+                    this.setState({
+                        scene: 2
+                    });
+                }
+            }
         })
         .catch((error) =>{
             Public.toast('网络错误~');
@@ -49,24 +67,42 @@ export default class History extends Component {
     render() {
         return (
             <View style={styles.History}>
-                <Back navigation={this.props.navigation} active={false}/>
+                <Back navigation={this.props.navigation} active={true}/>
                 <View style={styles.Panel}>
-                    <FlatList
-                        data={this.state.record}
-                        numColumns={1}
-                        keyExtractor={(item, index) => item.id.toString()}
-                        renderItem={({item}) =>
-                            <TouchableHighlight style={styles.Items} underlayColor="#ededed" onPress={()=>{this.props.navigation.navigate('Player', {id: item.id})}}>
-                                <View style={styles.List}>
-                                    <Image style={styles.Photo} source={{uri: item.poster}}/>
-                                    <View style={styles.Message}>
-                                        <Text style={styles.Caption}>{ this._onFilter(item.name) }</Text>
-                                        <Text style={styles.Timer}>{ item.time }</Text>
+                    {
+                        (this.state.scene == 0)
+                        ? <FlatList
+                            data={this.state.record}
+                            numColumns={1}
+                            keyExtractor={(item, index) => item.id.toString()}
+                            renderItem={({item}) =>
+                                <TouchableHighlight style={styles.Items} underlayColor="#ededed" onPress={()=>{this.props.navigation.navigate('Player', {id: item.id})}}>
+                                    <View style={styles.List}>
+                                        <Image style={styles.Photo} source={{uri: item.poster}}/>
+                                        <View style={styles.Message}>
+                                            <Text style={styles.Caption}>{ this._onFilter(item.name) }</Text>
+                                            <Text style={styles.Timer}>{ item.time }</Text>
+                                        </View>
                                     </View>
-                                </View>
-                            </TouchableHighlight>
-                        }
-                        />
+                                </TouchableHighlight>
+                            }
+                            />
+                        : (this.state.scene == 1)
+                        ? <View style={styles.Login}>
+                                <Image style={styles.Nodata} source={require('../static/image/nodata.png')}/>
+                                <Text style={styles.Goin}>暂无数据~</Text>
+                        </View>
+                        : <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Login', {
+                            refresh:()=>{
+                                this._refresh();
+                            }
+                        })}}>
+                            <View style={styles.Login}>
+                                <Image style={styles.Injustice} source={require('../static/image/injustice.png')}/>
+                                <Text style={styles.Goin}>您还不是会员, 去注册</Text>
+                            </View>
+                        </TouchableHighlight>
+                    }
                 </View>
             </View>
         )
@@ -109,5 +145,25 @@ const styles = StyleSheet.create({
         marginBottom: 3,
         fontSize: 14,
         color: '#666666'
+    },
+    Login: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    Injustice: {
+        width: 120,
+        height: 120,
+        backgroundColor: '#10aeff'
+    },
+    Goin: {
+        marginTop: 12,
+        fontSize: 16,
+        fontWeight: '400',
+        color: '#666666'
+    },
+    Nodata: {
+        width: 120,
+        height: 70,
     }
 })

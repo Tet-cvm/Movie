@@ -33,6 +33,7 @@ export default class Player extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            login: false, // 登录状态
             data: {},
             id: Number,
             loadComplete: false, // 数据接口是否加载完成
@@ -108,6 +109,7 @@ export default class Player extends Component {
         .then((res) => {
             setTimeout(()=>{
                 this.setState({
+                    login: res.login,
                     data: res.data,
                     // videoUrl: res.data.domains,
                     // videoUrl: res.data.domains[0],
@@ -255,6 +257,12 @@ export default class Player extends Component {
         });
     }
 
+    _onRefLogin = ()=> {
+        this.setState({
+            login: true
+        });
+    }
+
     render() {
         return (
             <View style={styles.Player} onLayout={this._onLayout}>
@@ -361,7 +369,7 @@ export default class Player extends Component {
                 </View>
                 {
                     this.state.isFullScreen ? null
-                    : <Detail data={this.state.data} id={this.state.id} onRefLove={this._onRefLove} />
+                    : <Detail data={this.state.data} id={this.state.id} login={this.state.login} navigation={this.props.navigation} onRefLove={this._onRefLove} onRefLogin={this._onRefLogin} />
                     // :<View style={{backgroundColor: 'pink', flex: 1}}></View>
                 }
             </View>

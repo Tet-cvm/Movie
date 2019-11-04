@@ -5,7 +5,6 @@ export default class Active extends Component {
     render() {
         return (
             <View style={styles.Active}>
-                {/* <Text>Active</Text> */}
                 <Image style={styles.Photo} source={require('../static/image/developing.png')}/>
                 <Text style={styles.oning}>敬请期待...</Text>
             </View>

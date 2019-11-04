@@ -129,14 +129,22 @@ export default class User extends Component {
                         }
                     </View>
                 </View>
-                <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('History')}}>
+                <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('History', {
+                    refresh:()=>{
+                        this._refresh();
+                    }
+                })}}>
                     <View style={styles.List}>
                         <Text style={styles.History}>观看记录</Text>
                         <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#d9d9d9'/>
                     </View>
                 </TouchableHighlight>
                 <View style={styles.Inner}>
-                    <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Collect')}}>
+                    <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Collect', {
+                        refresh:()=>{
+                            this._refresh();
+                        }
+                    })}}>
                         <View style={styles.List}>
                             <Text style={styles.History}>收藏</Text>
                             <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#d9d9d9'/>
