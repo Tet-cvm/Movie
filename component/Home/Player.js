@@ -36,6 +36,7 @@ export default class Player extends Component {
         this.state = {
             login: false, // 登录状态
             data: {},
+            app: '', // 唤醒app
             circle: '#ffffff', // 广告按钮颜色
             popup: false, // 是否显示广告
             ikon: '', // 广告图
@@ -75,6 +76,7 @@ export default class Player extends Component {
             if (res.status) {
                 this.setState({
                     popup: res.popup,
+                    app: res.app,
                     ikon: res.ikon,
                     circle: res.circle
                 });
@@ -410,7 +412,7 @@ export default class Player extends Component {
                     : <Detail data={this.state.data} id={this.state.id} login={this.state.login} navigation={this.props.navigation} onRefLove={this._onRefLove} onRefLogin={this._onRefLogin} />
                 }
                 {
-                    this.state.popup ? <Popup color={this.state.circle} ikon={this.state.ikon} onRefPopup={this._onRefPopup} /> : null
+                    this.state.popup ? <Popup app={this.state.app} color={this.state.circle} ikon={this.state.ikon} onRefPopup={this._onRefPopup} /> : null
                 }
             </View>
         )

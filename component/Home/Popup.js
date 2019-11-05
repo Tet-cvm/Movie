@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, Image, Alert, TouchableHighlight} from 'react-native';
+import '../Config/Config';
+import {StyleSheet, Text, View, Image, Alert, Linking, TouchableHighlight} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class Popup extends Component {
@@ -24,7 +25,14 @@ export default class Popup extends Component {
     }
 
     _onWake = ()=> {
-        Alert.alert('_onWake');
+        Linking.canOpenURL(this.props.app).then(supported => {
+            if (!supported) {
+                // 未安装跳应用市场
+                return Linking.openURL(APP_MOVIE.market[APP_MOVIE.brand]);
+            } else {
+                return Linking.openURL(this.props.app);
+            }
+        }).catch(err => console.log(JSON.stringify(err)))
     }
 
     _onClose = ()=> {
