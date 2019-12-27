@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Toast from 'react-native-root-toast';
 import RootSiblings from 'react-native-root-siblings';
 import Spinner from 'react-native-loading-spinner-overlay';
+import '../Config/Config';
 
 export default class Public extends Component {
     constructor(props, context) {
@@ -57,4 +58,31 @@ export default class Public extends Component {
     static loadHide = ()=> {
         sibling.destroy();
     }
+
+    // 调用方式 Public.report();
+    static report = (sceneid, acttype)=> {
+        const data = {
+            sceneid: sceneid,
+            userid: '000222',
+            acttype: acttype
+        };
+        fetch(APP_MOVIE.base_url + '/report/report', {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            })
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            if (!res.status) {
+                Public.toast(res.message);
+            }
+        })
+        .catch((error) =>{
+            Public.toast('网络错误~');
+        });
+    }
+
 }

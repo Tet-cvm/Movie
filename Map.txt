@@ -1,0 +1,31 @@
+
+
+            |- Active
+            |
+            |
+            |          |
+            |          |              |- Popup.js  (弹窗广告组件)
+            |          |              |
+index.js ---|- Home   -|- Player.js  -|- Detail.js (视频详情组件)
+            |          |  (播放器组件)  |
+            |          |              |
+            |          |
+            |
+            |
+            |
+            |          |- Login.js
+            |          |  (登录组件)
+            |- User  - |- Info.js
+            |          |  (用户信息)
+            |          |- History.js
+            |          |  (历史记录)
+            |          |- Collect.js
+            |          |- (收藏组件)
+            |          |- About.js
+            |          |- (关于我们)
+            |
+            |          |-Back.js   (返回组件)
+            |          |-Round.js  (圆角返回组件)
+            |- Common -|-Button.js (按钮组件)
+            |          |-Fade.js   (渐隐组件)
+            |          |-Public.js (公共组件-toast-loading)

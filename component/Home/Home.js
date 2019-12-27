@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {StatusBar, StyleSheet, Dimensions, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 import '../Config/Config';
+import Public from '../Common/Public';
 
 export default class Home extends Component {
     constructor(props) {
@@ -15,6 +16,8 @@ export default class Home extends Component {
     componentDidMount() {
         SplashScreen.hide();
         this._onFetch();
+        
+        Public.report('00001', 'show--11')
     }
 
     _onLayout = (event)=> {
