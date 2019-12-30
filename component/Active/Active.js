@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, WebView, Text, View, Image, Alert} from 'react-native';
-import {WebView} from 'react-native-webview'
+// import {WebView} from 'react-native-webview'
 import Public from '../Common/Public';
 
 export default class Active extends Component {
@@ -49,9 +49,10 @@ export default class Active extends Component {
             // </View>
             this.state.status ?
             (<View style={styles.Active}>
-                <WebView
+                <Text style={styles.oning}>333</Text>
+                {/* <WebView
                 source={{uri: this.state.cloud}}
-                />
+                /> */}
             </View>)
             :(<View style={styles.Active}>
                 <Image style={styles.Photo} source={require('../static/image/developing.png')}/>

@@ -170,6 +170,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-community_async-storage')
     implementation project(':react-native-image-crop-picker')
     implementation(project(':react-native-device-info')) {
         exclude group: 'com.google.android.gms'
