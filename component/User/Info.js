@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../Config/Config';
 import {StyleSheet, Text, View, Image, Switch, TextInput, TouchableHighlight, Alert} from 'react-native';
 import Back from '../Common/Back';
+import Public from '../Common/Public';
 import ImagePicker from 'react-native-image-crop-picker';
 
 export default class Info extends Component {
@@ -18,6 +19,10 @@ export default class Info extends Component {
 
     componentWillMount() {
         this._onFetch();
+    }
+
+    componentDidMount() {
+        Public.report('00006', 'show', 1);
     }
 
     _onImage = ()=> {

@@ -3,6 +3,7 @@ import {FlatList, TouchableHighlight, StyleSheet, Text, View, Image, Alert} from
 import '../Config/Config';
 import Back from '../Common/Back';
 import { SwipeListView } from 'react-native-swipe-list-view';
+import Public from '../Common/Public';
 
 export default class Collect extends Component {
     constructor(props) {
@@ -15,6 +16,10 @@ export default class Collect extends Component {
 
     componentWillMount() {
         this._onCollect();
+    }
+
+    componentDidMount() {
+        Public.report('00008', 'show', 1);
     }
 
     // 返回刷新
@@ -66,6 +71,7 @@ export default class Collect extends Component {
     }
 
     _onCancel = (row, id)=> {
+        Public.report('00008', 'click', 3);
         const data = {
             id: id
         };
@@ -92,6 +98,22 @@ export default class Collect extends Component {
         });
     }
 
+    _onPlayer = (id) => {
+        Public.report('00008', 'click', 1);
+        this.props.navigation.navigate('Player', {
+            id: id
+        })
+    }
+
+    _onLogin = ()=> {
+        Public.report('00008', 'click', 2);
+        this.props.navigation.navigate('Login', {
+            refresh:()=>{
+                this._refresh();
+            }
+        })
+    }
+
     render() {
         return (
             <View style={styles.Collect}>
@@ -103,7 +125,7 @@ export default class Collect extends Component {
                             data={this.state.record}
                             keyExtractor={(data, index) => data.id.toString()}
                             renderItem={(data, row) => (
-                                <TouchableHighlight style={styles.Items} underlayColor="#ededed" onPress={()=>{this.props.navigation.navigate('Player', {id: data.item.id})}}>
+                                <TouchableHighlight style={styles.Items} underlayColor="#ededed" onPress={() => this._onPlayer(data.item.id)}>
                                     <View style={styles.List}>
                                         <Image style={styles.Photo} source={{uri: data.item.poster}}/>
                                         <View style={styles.Message}>
@@ -131,11 +153,7 @@ export default class Collect extends Component {
                                 <Image style={styles.Nodata} source={require('../static/image/nodata.png')}/>
                                 <Text style={styles.Goin}>暂无数据~</Text>
                         </View>
-                        : <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Login', {
-                            refresh:()=>{
-                                this._refresh();
-                            }
-                        })}}>
+                        : <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={() => this._onLogin()}>
                             <View style={styles.Login}>
                                 <Image style={styles.Injustice} source={require('../static/image/injustice.png')}/>
                                 <Text style={styles.Goin}>您还不是会员, 去注册</Text>

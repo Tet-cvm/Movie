@@ -35,6 +35,8 @@ export default class Login extends Component {
             system: system,
             uniqueid: uniqueid
         });
+
+        Public.report('00005', 'show', 1);
     }
 
     _onAccount = (account)=> {
@@ -74,6 +76,7 @@ export default class Login extends Component {
     }
 
     _onSubmit = ()=> {
+        Public.report('00005', 'click', 1);
         if (this.state.verifyAccount && this.state.verifyPassword) {
             Public.loadShow('登录中...');
             this._onFetch();
@@ -104,6 +107,7 @@ export default class Login extends Component {
             if (res.status) {
                 Public.loadHide();
                 Public.toast(res.message);
+                Public.storage.save({key: 'unionid', data: res.key})
                 this.props.navigation.goBack();
                 this.props.navigation.state.params.refresh();
             } else {

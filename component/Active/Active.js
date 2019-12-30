@@ -1,13 +1,62 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, WebView, Text, View, Image, Alert} from 'react-native';
+import {WebView} from 'react-native-webview'
+import Public from '../Common/Public';
 
 export default class Active extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            cloud: '',
+            status: Boolean
+        }
+    }
+
+    componentWillMount() {
+        fetch(APP_MOVIE.base_url + '/active/cloud', {
+            method: 'POST',
+            mode: "cors",
+            headers: new Headers({
+                'Content-Type': 'application/json',
+            })
+        })
+        .then((response) => response.json())
+        .then((res) => {
+            this.setState({status: res.status})
+            if (res.status) {
+                this.setState({cloud: res.url});
+            } else {
+                Public.toast(res.message);
+            }
+        })
+        .catch((error) =>{
+            Public.toast('网络错误~');
+        });
+    }
+
+    componentDidMount() {
+        Public.report('00003', 'show', 1);
+    }
+
     render() {
         return (
-            <View style={styles.Active}>
+            // <View style={styles.Active}>
+            //     {
+            //         this.state.status ?
+            //         (<Image style={styles.Photo} source={require('../static/image/developing.png')}/>
+            //         <Text style={styles.oning}>敬请期待...</Text>) : (<Text style={styles.oning}>敬请期待...</Text>)
+            //     }
+            // </View>
+            this.state.status ?
+            (<View style={styles.Active}>
+                <WebView
+                source={{uri: this.state.cloud}}
+                />
+            </View>)
+            :(<View style={styles.Active}>
                 <Image style={styles.Photo} source={require('../static/image/developing.png')}/>
                 <Text style={styles.oning}>敬请期待...</Text>
-            </View>
+            </View>)
         )
     }
 }

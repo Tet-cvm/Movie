@@ -21,6 +21,10 @@ export default class User extends Component {
         this._onFetch();
     }
 
+    componentDidMount() {
+        Public.report('00004', 'show', 1);
+    }
+
     componentWillMount() {
         this._onFetch();
     }
@@ -60,6 +64,47 @@ export default class User extends Component {
 		});
     }
 
+    _onDetail = () => {
+        Public.report('00004', 'click', 2);
+        this.props.navigation.navigate('Info', {
+            refresh:()=>{
+                this._refresh();
+            }
+        });
+    }
+
+    _onLogin = () => {
+        Public.report('00004', 'click', 1);
+        this.props.navigation.navigate('Login',{
+            refresh:()=>{
+                this._refresh();
+            }
+        });
+    }
+
+    _onHistory = () => {
+        Public.report('00004', 'click', 3);
+        this.props.navigation.navigate('History', {
+            refresh:()=>{
+                this._refresh();
+            }
+        });
+    }
+
+    _onCollect = () => {
+        Public.report('00004', 'click', 4);
+        this.props.navigation.navigate('Collect', {
+            refresh:()=>{
+                this._refresh();
+            }
+        })
+    }
+
+    _onAbout = () => {
+        Public.report('00004', 'click', 5);
+        this.props.navigation.navigate('About');
+    }
+
     _onLevel = (level)=> {
         switch(level)
         {
@@ -91,11 +136,7 @@ export default class User extends Component {
                     </View>
                     <View style={styles.Contain}>
                         {this.state.loginStatus ? 
-                            (<TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Info', {
-                                refresh:()=>{
-                                    this._refresh();
-                                }
-                            })}}>
+                            (<TouchableHighlight underlayColor="transparent" onPress={() => this._onDetail()}>
                                 <View style={styles.Signin}>
                                     <View style={styles.Panel}>
                                         {
@@ -111,11 +152,7 @@ export default class User extends Component {
                                     <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#ffffff'/>
                                 </View>
                             </TouchableHighlight>):
-                            (<TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Login', {
-                                refresh:()=>{
-                                    this._refresh();
-                                }
-                            })}}>
+                            (<TouchableHighlight underlayColor="transparent" onPress={() => this._onLogin()}>
                                 <View style={styles.Signin}>
                                     <View style={styles.Panel}>
                                         <Image style={styles.Photo} source={require('../static/image/default.png')}/>
@@ -129,22 +166,14 @@ export default class User extends Component {
                         }
                     </View>
                 </View>
-                <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('History', {
-                    refresh:()=>{
-                        this._refresh();
-                    }
-                })}}>
+                <TouchableHighlight underlayColor="transparent" onPress={() => this._onHistory()}>
                     <View style={styles.List}>
                         <Text style={styles.History}>观看记录</Text>
                         <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#d9d9d9'/>
                     </View>
                 </TouchableHighlight>
                 <View style={styles.Inner}>
-                    <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Collect', {
-                        refresh:()=>{
-                            this._refresh();
-                        }
-                    })}}>
+                    <TouchableHighlight underlayColor="transparent" onPress={() => this._onCollect()}>
                         <View style={styles.List}>
                             <Text style={styles.History}>收藏</Text>
                             <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#d9d9d9'/>
@@ -156,7 +185,7 @@ export default class User extends Component {
                         <Text style={styles.Help}>QQ: 3271468090</Text>
                     </View>
                     <View style={styles.Linner}></View>
-                    <TouchableHighlight underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('About')}}>
+                    <TouchableHighlight underlayColor="transparent" onPress={() => this._onAbout()}>
                         <View style={styles.List}>
                             <Text style={styles.History}>关于我们</Text>
                             <Ionicons style={styles.Arrow} name='ios-arrow-forward' size={22} color='#d9d9d9'/>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {FlatList, TouchableHighlight, StyleSheet, Text, View, Image, Alert} from 'react-native';
 import '../Config/Config';
 import Back from '../Common/Back';
+import Public from '../Common/Public';
 
 export default class History extends Component {
     constructor(props) {
@@ -14,6 +15,10 @@ export default class History extends Component {
 
     componentWillMount() {
         this._onHistory();
+    }
+
+    componentDidMount() {
+        Public.report('00007', 'show', 1);
     }
 
     // 返回刷新
@@ -64,6 +69,22 @@ export default class History extends Component {
         return name;
     }
 
+    _onPlayer = (id) => {
+        Public.report('00007', 'click', 1);
+        this.props.navigation.navigate('Player', {
+            id: id
+        });
+    }
+
+    _onLogin = () => {
+        Public.report('00007', 'click', 2);
+        this.props.navigation.navigate('Login', {
+            refresh:()=>{
+                this._refresh();
+            }
+        })
+    }
+
     render() {
         return (
             <View style={styles.History}>
@@ -76,7 +97,7 @@ export default class History extends Component {
                             numColumns={1}
                             keyExtractor={(item, index) => item.id.toString()}
                             renderItem={({item}) =>
-                                <TouchableHighlight style={styles.Items} underlayColor="#ededed" onPress={()=>{this.props.navigation.navigate('Player', {id: item.id})}}>
+                                <TouchableHighlight style={styles.Items} underlayColor="#ededed" onPress={() => this._onPlayer(item.id)}>
                                     <View style={styles.List}>
                                         <Image style={styles.Photo} source={{uri: item.poster}}/>
                                         <View style={styles.Message}>
@@ -92,11 +113,7 @@ export default class History extends Component {
                                 <Image style={styles.Nodata} source={require('../static/image/nodata.png')}/>
                                 <Text style={styles.Goin}>暂无数据~</Text>
                         </View>
-                        : <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Login', {
-                            refresh:()=>{
-                                this._refresh();
-                            }
-                        })}}>
+                        : <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={() => this._onLogin()}>
                             <View style={styles.Login}>
                                 <Image style={styles.Injustice} source={require('../static/image/injustice.png')}/>
                                 <Text style={styles.Goin}>您还不是会员, 去注册</Text>

@@ -29,3 +29,37 @@ index.js ---|- Home   -|- Player.js  -|- Detail.js (视频详情组件)
             |- Common -|-Button.js (按钮组件)
             |          |-Fade.js   (渐隐组件)
             |          |-Public.js (公共组件-toast-loading)
+
+
+=========================================================
+上报:
+Home页面   -》 00001  -》show1 视频列表
+                     -》click id 资源点击
+
+Player视频 -》 00002  -》show1 视频播放
+                     -》show2 显示广告
+
+Active活动 -》 00003  -》show1 活动页展示
+
+User我的   -》 00004  -》show1 我的显示
+                     -》click1 登录
+                     -》click2 用户信息
+                     -》click3 历史记录
+                     -》click4 收藏
+                     -》click5 关于我们
+
+Login登录  -》 00005 -》show1 登录页展示
+                    -》click1 点击注册
+
+Info用户信息 -》 00006 -》show1 用户信息展示
+
+History历史 -》00007  -》show1 显示历史记录
+                     -》click1 视频播放
+                     -》click2 跳登录
+
+Collect收藏 -》00008  -》show1 显示收藏页
+                     -》click1 视频播放
+                     -》click2 跳登录
+                     -》click3 取消收藏
+
+About关于我们 -》00009 -》show1 显示关于我们

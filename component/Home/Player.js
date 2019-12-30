@@ -95,7 +95,7 @@ export default class Player extends Component {
     }
 
     componentDidMount() {
-
+        Public.report('00002', 'show', 1);
     }
 
     componentWillUnmount() {

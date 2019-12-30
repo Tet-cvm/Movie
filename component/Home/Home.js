@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import {StatusBar, StyleSheet, Dimensions, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
+import {StatusBar, StyleSheet, Dimensions, FlatList, Text, View, Image, TouchableHighlight, Alert, RecyclerViewBackedScrollView} from 'react-native';
 import '../Config/Config';
 import Public from '../Common/Public';
 
@@ -16,8 +16,7 @@ export default class Home extends Component {
     componentDidMount() {
         SplashScreen.hide();
         this._onFetch();
-        
-        Public.report('00001', 'show--11')
+        Public.report('00001', 'show', 1);
     }
 
     _onLayout = (event)=> {
@@ -53,6 +52,11 @@ export default class Home extends Component {
         return name;
     }
 
+    _onNavigation = (id) => {
+        Public.report('00001', 'click', id);
+        this.props.navigation.navigate('Player', {id: id})
+    }
+
     render() {
         return (
             <View style={styles.Home} onLayout={(event) => this._onLayout(event)}>
@@ -66,7 +70,7 @@ export default class Home extends Component {
                         numColumns={3}
                         keyExtractor={(item, index) => item.id.toString()}
                         renderItem={({item}) =>
-                            <TouchableHighlight style={styles.Items} underlayColor="transparent" onPress={()=>{this.props.navigation.navigate('Player', {id: item.id})}}>
+                            <TouchableHighlight style={styles.Items} underlayColor="transparent" onPress={() => this._onNavigation(item.id)}>
                                 <View style={styles.List}>
                                     <Image style={styles.Photo} source={{uri: item.poster}}/>
                                     <Text style={styles.Caption}>{ this._onFilter(item.name) }</Text>
