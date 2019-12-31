@@ -1,15 +1,23 @@
 import React, { Component } from 'react';
-import {StyleSheet, WebView, Text, View, Image, Alert} from 'react-native';
-// import {WebView} from 'react-native-webview'
+import {StyleSheet, Dimensions, WebView, Text, View, Image, Alert} from 'react-native';
 import Public from '../Common/Public';
 
 export default class Active extends Component {
     constructor(props) {
         super(props)
+        this.webView = null;
         this.state = {
             cloud: '',
-            status: Boolean
+            status: Boolean,
+            respond: null,
         }
+    }
+
+    // 返回刷新
+    _refresh = (data)=> {
+        this.setState({respond: data.data}, () => {
+            this.webView.postMessage(JSON.stringify(this.state.respond));
+        });
     }
 
     componentWillMount() {
@@ -37,22 +45,22 @@ export default class Active extends Component {
     componentDidMount() {
         Public.report('00003', 'show', 1);
     }
+    
+    _onMessage = (event)=> {
+        Public.machine(event, this.props.navigation.navigate, this.props.navigation, this);
+    }
 
     render() {
         return (
-            // <View style={styles.Active}>
-            //     {
-            //         this.state.status ?
-            //         (<Image style={styles.Photo} source={require('../static/image/developing.png')}/>
-            //         <Text style={styles.oning}>敬请期待...</Text>) : (<Text style={styles.oning}>敬请期待...</Text>)
-            //     }
-            // </View>
             this.state.status ?
             (<View style={styles.Active}>
-                <Text style={styles.oning}>333</Text>
-                {/* <WebView
+                <WebView
                 source={{uri: this.state.cloud}}
-                /> */}
+                style={{width: Dimensions.get('window').width}}
+                javaScriptEnabled={true}
+                ref={( webView ) => this.webView = webView}
+                onMessage={this._onMessage}
+                />
             </View>)
             :(<View style={styles.Active}>
                 <Image style={styles.Photo} source={require('../static/image/developing.png')}/>

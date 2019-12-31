@@ -17,6 +17,7 @@ import Login from './component/User/Login';
 import History from './component/User/History';
 import Collect from './component/User/Collect';
 import About from './component/User/About';
+import Page from './component/Common/Page';
 
 import {name as appName} from './app.json';
 
@@ -79,7 +80,8 @@ const AppNavigator = createStackNavigator({
     Collect: Collect,
     About: About,
     Detail: Detail,
-    Player: Player
+    Player: Player,
+    Page: Page,
     // Player: {
     //     screen: Player,
     //     navigationOptions: {

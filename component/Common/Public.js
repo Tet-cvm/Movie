@@ -6,6 +6,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import '../Config/Config';
 import Storage from 'react-native-storage';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Alert } from 'react-native';
 
 export default class Public extends Component {
     constructor(props, context) {
@@ -143,4 +144,31 @@ export default class Public extends Component {
             Public.toast('网络错误~');
         });
     }
+
+    // 两端通信
+    static machine = (event, navigate, navigation, that) => {
+        try {
+            const data = JSON.parse(event.nativeEvent.data);
+            switch(data.type)
+            {
+                case 'onPage':
+                    navigate('Page', {
+                        refresh:(data)=>{
+                            that._refresh(data);
+                        },
+                        data: {
+                            uri: data.uri
+                        }
+                    })
+                    break;
+                case 'onBack':
+                    navigation.goBack();
+                    navigation.state.params.refresh(data);
+                    break;
+            }
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
 }
