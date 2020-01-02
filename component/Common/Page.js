@@ -12,24 +12,17 @@ export default class Page extends Component {
         }
     }
 
-    // 返回刷新
-    _refresh = (data)=> {
-        this.setState({respond: data.data}, () => {
-            this.webView.postMessage(JSON.stringify(this.state.respond));
-        });
-    }
-
     componentWillMount() {
         const {params} = this.props.navigation.state;
         try {
-            this.setState({uri: params.data.uri});
+            this.setState({uri: params.uri});
         } catch(e) {
             console.log(e)
         }        
     }
 
     _onMessage = (event)=> {
-        Public.machine(event, this.props.navigation.push, this.props.navigation, this);
+        Public.machine(event, this.props.navigation.push, this.props.navigation);
     }
 
     render() {

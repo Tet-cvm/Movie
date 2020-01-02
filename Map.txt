@@ -63,3 +63,168 @@ Collect收藏 -》00008  -》show1 显示收藏页
                      -》click3 取消收藏
 
 About关于我们 -》00009 -》show1 显示关于我们
+
+
+============================================
+Common/Public.js
+上报接口:   /report/report
+          请求参数:
+          sceneid  String  场景id
+          userid   String  用户id
+          acttype  String  行为 click show
+          uniqueid String  设备唯一标识
+          brand    String  设备品牌
+          type     String  类型0123
+          返回值:
+          status   Boolean 状态
+          message  String  提示
+
+Active/Active.js
+页配置接口: /active/cloud
+          请求参数:
+          返回值:
+          status   Boolean 状态
+          url      String  配置地址
+
+Home/Detail.js
+存储收藏接口:  /home/collect
+          请求参数:
+          id       Int     资源id
+          uniqueid String  设备唯一标识
+          返回值:
+          status   Boolean 状态
+          collect  Boolean 收藏/取消
+          message  String  提示
+
+Home/Home.js
+资源列表接口: /home/movie
+          请求参数:
+          返回值:
+          status      Boolean 状态
+          data.id     资源id
+          data.name   资源名称
+          data.poster 资源封面
+
+/Home/Player.js
+弹窗广告接口:  /popup/dialog
+          请求参数:
+          uniqueid  String  设备唯一标识
+          返回值:
+          status    Boolean 状态
+          popup     Boolean 显示/隐藏
+          app       String  应用市场地址
+          circle    String  关闭按钮颜色
+          ikon      String  弹窗底图
+
+/Home/Player.js
+存储观看记录接口:   /home/history
+          请求参数:
+          id        Int     资源id
+          uniqueid  String  设备唯一标识
+          返回值:
+
+/Home/Player.js
+视频播放接口:     /home/play
+          请求参数:
+          id             Int     资源id
+          uniqueid       String  设备唯一标识
+          返回值:
+          status         Boolean 状态
+          login          Boolean 登录/未登录
+          data.id        Int     资源id
+          data.collect   Boolean 收藏/未收藏
+          data.name      Boolean 资源名称
+          data.poster    String  资源海报
+          data.domains   String  资源地址
+          data.series    Array   资源类型
+          data.describe  String  资源描述
+          data.star      String  资源作者
+          data.score     String  资源评分
+
+/User/Collect.js
+收藏列表接口:    /home/star
+          请求参数:
+          uniqueid  String  设备唯一标识
+          返回值:
+          status         Boolean 状态
+          login          Boolean 登录/未登录
+          data.id        Int     资源id
+          data.name      String  资源名称
+          data.time      String  资源时间
+          data.poster    String  资源海报
+
+/User/Collect.js
+取消收藏接口:   /home/cancel
+          请求参数:
+          id             Int     资源id
+          返回值:
+          status         Boolean 状态
+          message        String  提示
+
+/User/History.js
+历史记录接口: /home/record
+          请求参数:
+          uniqueid  String  设备唯一标识
+          返回值:
+          status         Boolean 状态
+          login          Boolean 登录/未登录
+          data.id        Int     资源id
+          data.name      String  资源名称
+          data.time      String  资源时间
+          data.poster    String  资源海报
+
+
+/User/Info.js
+头像上传接口:    /signin/upload
+                请求参数:
+                data.file       String     资源id
+                data.uniqueid   String     设备唯一标识
+                返回值:
+                status         Boolean 状态
+                message        String  提示
+
+/User/Info.js
+用户信息修改接口:   /signin/modify
+                请求参数:
+                type            Int     0昵称 1性别 2签名
+                nick            String  昵称
+                sex             Int     0男 1女
+                signature       String  签名
+                uniqueid        String  唯一标识
+                返回值:
+                status         Boolean 状态
+                message        String  提示
+
+/User/Info.js
+用户信息接口:     /signin/member
+                请求参数:
+                uniqueid        String  唯一标识
+                返回值:
+                status         Boolean 状态
+                icon           String  头像
+                nick           String  昵称
+                sex            Boolean 性别
+                signature      String  签名
+
+/User/Login.js
+登录注册接口:     /signin/register
+                请求参数:
+                brand        String  唯一标识
+                system       String  设备系统
+                uniqueid     String  设备唯一标识
+                account      String  注册账号
+                password     String  注册密码
+                返回值:
+                status         Boolean 状态
+                message        String  提示
+                key            String  加密id
+
+/User/User.js
+刷新登录信息接口:  /signin/member
+                请求参数:
+                uniqueid   String     设备唯一标识
+                返回值:
+                status         Boolean 状态
+                icon           String  头像
+                nick           String  昵称
+                level          Int     等级 1侍从 2剑士 3骑士 4圣骑士 5圣主

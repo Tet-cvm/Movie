@@ -146,24 +146,16 @@ export default class Public extends Component {
     }
 
     // 两端通信
-    static machine = (event, navigate, navigation, that) => {
+    static machine = (event, navigate, navigation) => {
         try {
             const data = JSON.parse(event.nativeEvent.data);
             switch(data.type)
             {
                 case 'onPage':
-                    navigate('Page', {
-                        refresh:(data)=>{
-                            that._refresh(data);
-                        },
-                        data: {
-                            uri: data.uri
-                        }
-                    })
+                    navigate('Page', {uri: data.uri})
                     break;
                 case 'onBack':
                     navigation.goBack();
-                    navigation.state.params.refresh(data);
                     break;
             }
         } catch(e) {

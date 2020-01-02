@@ -13,13 +13,6 @@ export default class Active extends Component {
         }
     }
 
-    // 返回刷新
-    _refresh = (data)=> {
-        this.setState({respond: data.data}, () => {
-            this.webView.postMessage(JSON.stringify(this.state.respond));
-        });
-    }
-
     componentWillMount() {
         fetch(APP_MOVIE.base_url + '/active/cloud', {
             method: 'POST',
@@ -33,8 +26,6 @@ export default class Active extends Component {
             this.setState({status: res.status})
             if (res.status) {
                 this.setState({cloud: res.url});
-            } else {
-                Public.toast(res.message);
             }
         })
         .catch((error) =>{
@@ -47,7 +38,7 @@ export default class Active extends Component {
     }
     
     _onMessage = (event)=> {
-        Public.machine(event, this.props.navigation.navigate, this.props.navigation, this);
+        Public.machine(event, this.props.navigation.navigate, this.props.navigation);
     }
 
     render() {
