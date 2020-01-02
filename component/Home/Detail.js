@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, Dimensions, Text, View, TouchableHighlight, Alert} from 'react-native';
+import {StyleSheet, Dimensions, Text, View, TouchableHighlight, Alert, Image} from 'react-native';
 import '../Config/Config';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -11,6 +11,10 @@ export default class Detail extends Component {
         this.state = {
 
         }
+    }
+
+    _onMap = () => {
+        Public.primal(this.props.navigation.navigate, this.props.jump);
     }
 
     _onCollect = ()=> {
@@ -72,11 +76,10 @@ export default class Detail extends Component {
                     tabBarActiveTextColor={'#10aeff'}
                     >
                     <View tabLabel="推荐" style={styles.Suggest}>
-                        <Text>{JSON.stringify(this.props.data)}</Text>
+                        <TouchableHighlight underlayColor="transparent" style={styles.Dollar} onPress={()=>{ this._onMap() }}>
+                            <Image style={styles.Map} source={this.props.imap ? {uri: this.props.imap} : require('../static/image/imap.jpg')}/>
+                        </TouchableHighlight>
                     </View>
-                    {/* <View tabLabel="剧集" style={styles.Gather}>
-                        <Text>2222222</Text>
-                    </View> */}
                     <View tabLabel="详情" style={styles.Matter}>
                         <View style={styles.Collect}>
                             <View>
@@ -105,6 +108,17 @@ const styles = StyleSheet.create({
     Suggest: {
         flex: 1,
         backgroundColor: '#f5f5f5'
+    },
+    Dollar: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center'
+    },
+    Map: {
+        marginTop: 82,
+        width: 280,
+        height: 198,
+        backgroundColor: '#c7c7c7',
     },
     Gather: {
         flex: 1,

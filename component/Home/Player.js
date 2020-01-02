@@ -40,6 +40,8 @@ export default class Player extends Component {
             circle: '#ffffff', // 广告按钮颜色
             popup: false, // 是否显示广告
             ikon: '', // 广告图
+            imap: '', // 大图广告
+            jump: '', // 大图跳转uri
             id: Number,
             loadComplete: false, // 数据接口是否加载完成
             videoUrl: "#", // 视频地址
@@ -78,6 +80,8 @@ export default class Player extends Component {
                     popup: res.popup,
                     app: res.app,
                     ikon: res.ikon,
+                    imap: res.imap,
+                    jump: res.jump,
                     circle: res.circle
                 });
             } else {
@@ -409,7 +413,7 @@ export default class Player extends Component {
                 </View>
                 {
                     this.state.isFullScreen ? null
-                    : <Detail data={this.state.data} id={this.state.id} login={this.state.login} navigation={this.props.navigation} onRefLove={this._onRefLove} onRefLogin={this._onRefLogin} />
+                    : <Detail data={this.state.data} id={this.state.id} imap={this.state.imap} jump={this.state.jump} ikon={this.state.ikon} login={this.state.login} navigation={this.props.navigation} onRefLove={this._onRefLove} onRefLogin={this._onRefLogin} />
                 }
                 {
                     this.state.popup ? <Popup app={this.state.app} color={this.state.circle} ikon={this.state.ikon} onRefPopup={this._onRefPopup} /> : null

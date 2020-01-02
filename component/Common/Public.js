@@ -163,4 +163,12 @@ export default class Public extends Component {
         }
     }
 
+    static primal = (navigate, uri) => {
+        try {
+            navigate('Page', {uri: uri})
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
 }

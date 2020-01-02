@@ -71,7 +71,7 @@ export default class Popup extends Component {
                         }
                     </View>
                     <TouchableHighlight underlayColor="transparent" onPress={()=>{this._onWake()}}>
-                        <Image style={styles.Photo} source={{uri: this.props.ikon}}/>
+                        <Image style={styles.Photo} source={this.props.ikon ? {uri: this.props.ikon} : require('../static/image/ikon.jpg')}/>
                     </TouchableHighlight>
                 </View>
             </View>
