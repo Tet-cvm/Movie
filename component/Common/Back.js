@@ -11,6 +11,15 @@ export default class Back extends Component {
     }
 
     _onBack = ()=> {
+        if (this.props.before) {
+            this.props.onFusion();
+            this._onHistory();
+        } else {
+            this._onHistory();
+        }
+    }
+
+    _onHistory = () => {
         this.props.navigation.goBack();
         if (this.props.active) {  // 返回刷新数据
             this.props.navigation.state.params.refresh();

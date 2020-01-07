@@ -13,8 +13,16 @@ export default class Detail extends Component {
         }
     }
 
-    _onMap = () => {
-        Public.primal(this.props.navigation.navigate, this.props.jump);
+    _onStarry = () => {
+        if (this.props.starry.url) {
+            Public.primal(this.props.navigation.navigate, this.props.starry.url);
+        }
+    }
+
+    _onChasm = () => {
+        if (this.props.chasm.url) {
+            Public.primal(this.props.navigation.navigate, this.props.chasm.url);
+        }
     }
 
     _onCollect = ()=> {
@@ -76,22 +84,29 @@ export default class Detail extends Component {
                     tabBarActiveTextColor={'#10aeff'}
                     >
                     <View tabLabel="推荐" style={styles.Suggest}>
-                        <TouchableHighlight underlayColor="transparent" style={styles.Dollar} onPress={()=>{ this._onMap() }}>
-                            <Image style={styles.Map} source={this.props.imap ? {uri: this.props.imap} : require('../static/image/imap.jpg')}/>
-                        </TouchableHighlight>
+                        <View>
+                            <TouchableHighlight underlayColor="transparent" onPress={()=>{ this._onStarry() }}>
+                                <Image style={styles.Starry} source={this.props.starry.image ? {uri: this.props.starry.image} : require('../static/image/starry.png')}/>
+                            </TouchableHighlight>
+                        </View>
+                        <View>
+                            <TouchableHighlight underlayColor="transparent" onPress={()=>{ this._onChasm() }}>
+                                <Image style={styles.Chasm} source={this.props.chasm.image ? {uri: this.props.chasm.image} : require('../static/image/chasm.png')}/>
+                            </TouchableHighlight>
+                        </View>
                     </View>
                     <View tabLabel="详情" style={styles.Matter}>
                         <View style={styles.Collect}>
                             <View>
-                                <Text style={styles.Star}>作者: { this.props.data.star }</Text>
-                                <Text style={styles.Series}>类型: { this.props.data.series }</Text>
+                                <Text style={styles.Star}>作者: { this.props.videoData.star }</Text>
+                                <Text style={styles.Series}>类型: { this.props.videoData.series }</Text>
                             </View>
                             <TouchableHighlight underlayColor="transparent" style={styles.Love} onPress={()=>{ this._onCollect() }}>
-                                <AntDesign name='hearto' size={22} color={this.props.data.collect ? '#10aeff':'#333333'}/>
+                                <AntDesign name='hearto' size={22} color={this.props.videoData.collect ? '#10aeff':'#333333'}/>
                             </TouchableHighlight>
                         </View>
                         <View>
-                            <Text style={styles.Describe}>简介: { this.props.data.describe }</Text>
+                            <Text style={styles.Describe}>简介: { this.props.videoData.describe }</Text>
                         </View>
                     </View>
                 </ScrollableTabView>
@@ -107,18 +122,18 @@ const styles = StyleSheet.create({
     },
     Suggest: {
         flex: 1,
-        backgroundColor: '#f5f5f5'
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#f5f5f5',
     },
-    Dollar: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center'
-    },
-    Map: {
-        marginTop: 82,
+    Starry: {
+        marginTop: 46,
         width: 280,
         height: 198,
-        backgroundColor: '#c7c7c7',
+    },
+    Chasm: {
+        width: Dimensions.get('window').width,
+        height: 76,
     },
     Gather: {
         flex: 1,

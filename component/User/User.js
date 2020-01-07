@@ -102,6 +102,7 @@ export default class User extends Component {
 
     _onAbout = () => {
         Public.report('00004', 'click', 5);
+        return;
         this.props.navigation.navigate('About');
     }
 

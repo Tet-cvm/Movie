@@ -35,13 +35,28 @@ export default class Player extends Component {
         super(props)
         this.state = {
             login: false, // 登录状态
-            data: {},
-            app: '', // 唤醒app
-            circle: '#ffffff', // 广告按钮颜色
-            popup: false, // 是否显示广告
-            ikon: '', // 广告图
-            imap: '', // 大图广告
-            jump: '', // 大图跳转uri
+            videoData: { // 视频数据
+                star: null,
+                series: null,
+                collect: false,
+                describe: null
+            },
+            bezel: { // 弹窗广告
+                status: false,
+                app: null,
+                circle: '#d9d9d9',
+                image: null
+            },
+            starry: { // 大图广告
+                status: true,
+                image: null,
+                url: null
+            },
+            chasm: {// 底部广告
+                status: true,
+                image: null,
+                url: null
+            },
             id: Number,
             loadComplete: false, // 数据接口是否加载完成
             videoUrl: "#", // 视频地址
@@ -77,12 +92,9 @@ export default class Player extends Component {
         .then((res) => {
             if (res.status) {
                 this.setState({
-                    popup: res.popup,
-                    app: res.app,
-                    ikon: res.ikon,
-                    imap: res.imap,
-                    jump: res.jump,
-                    circle: res.circle
+                    bezel: res.bezel,
+                    starry: res.starry,
+                    chasm: res.chasm
                 });
             } else {
                 Public.toast(res.message);
@@ -148,7 +160,8 @@ export default class Player extends Component {
             setTimeout(()=>{
                 this.setState({
                     login: res.login,
-                    data: res.data,
+                    videoData: res.data,
+                    // data: res.data,
                     // videoUrl: res.data.domains,
                     // videoUrl: res.data.domains[0],
                     loadComplete: true,
@@ -289,9 +302,9 @@ export default class Player extends Component {
     }
 
     _onRefLove = (value)=> {
-        let change = Object.assign({}, this.state.data, {collect: value})
+        let toggle = Object.assign({}, this.state.videoData, {collect: value})
         this.setState({
-            data: change
+            videoData: toggle
         });
     }
 
@@ -302,8 +315,9 @@ export default class Player extends Component {
     }
 
     _onRefPopup = ()=> {
+        let toggle = Object.assign({}, this.state.bezel, {status: false})
         this.setState({
-            popup: false
+            bezel: toggle
         });
     }
 
@@ -413,10 +427,19 @@ export default class Player extends Component {
                 </View>
                 {
                     this.state.isFullScreen ? null
-                    : <Detail data={this.state.data} id={this.state.id} imap={this.state.imap} jump={this.state.jump} ikon={this.state.ikon} login={this.state.login} navigation={this.props.navigation} onRefLove={this._onRefLove} onRefLogin={this._onRefLogin} />
+                    : <Detail
+                        id={this.state.id}
+                        videoData={this.state.videoData}
+                        starry={this.state.starry}
+                        chasm={this.state.chasm}
+                        login={this.state.login}
+                        navigation={this.props.navigation}
+                        onRefLove={this._onRefLove}
+                        onRefLogin={this._onRefLogin}
+                        />
                 }
                 {
-                    this.state.popup ? <Popup app={this.state.app} color={this.state.circle} ikon={this.state.ikon} onRefPopup={this._onRefPopup} /> : null
+                    this.state.bezel.status ? <Popup bezel={this.state.bezel}  onRefPopup={this._onRefPopup} /> : null
                 }
             </View>
         )

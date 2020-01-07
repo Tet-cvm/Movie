@@ -54,7 +54,7 @@ export default class Active extends Component {
                 />
             </View>)
             :(<View style={styles.Active}>
-                <Image style={styles.Photo} source={require('../static/image/developing.png')}/>
+                <Image style={styles.Photo} source={require('../static/image/setout.png')}/>
                 <Text style={styles.oning}>敬请期待...</Text>
             </View>)
         )

@@ -27,14 +27,16 @@ export default class Popup extends Component {
     }
 
     _onWake = ()=> {
-        Linking.canOpenURL(this.props.app).then(supported => {
-            if (!supported) {
-                // 未安装跳应用市场
-                return Linking.openURL(APP_MOVIE.market[APP_MOVIE.brand]);
-            } else {
-                return Linking.openURL(this.props.app);
-            }
-        }).catch(err => console.log(JSON.stringify(err)))
+        if (this.props.bezel.app) {
+            Linking.canOpenURL(this.props.bezel.app).then(supported => {
+                if (!supported) {
+                    // 未安装跳应用市场
+                    return Linking.openURL(APP_MOVIE.market[APP_MOVIE.brand]);
+                } else {
+                    return Linking.openURL(this.props.bezel.app);
+                }
+            }).catch(err => console.log(JSON.stringify(err)))
+        }
     }
 
     _onClose = ()=> {
@@ -54,24 +56,24 @@ export default class Popup extends Component {
                         width: 26,
                         height: 28,
                         borderWidth: 1.5,
-                        borderColor: this.props.color,
+                        borderColor: this.props.bezel.circle,
                         borderRadius: 50,
                         zIndex: 777
                     }}>
                         {
                             this.state.close
                             ? <TouchableHighlight underlayColor="transparent" onPress={()=>{this._onClose()}}>
-                                <Ionicons name='ios-close' size={22} color={this.props.color}/>
+                                <Ionicons name='ios-close' size={22} color={this.props.bezel.circle}/>
                             </TouchableHighlight>
                             : <Text style={{
                                 fontSize: 15,
-                                color: this.props.color,
+                                color: this.props.bezel.circle,
                                 fontWeight: '400'
                             }}>{ this.state.watch }</Text>
                         }
                     </View>
                     <TouchableHighlight underlayColor="transparent" onPress={()=>{this._onWake()}}>
-                        <Image style={styles.Photo} source={this.props.ikon ? {uri: this.props.ikon} : require('../static/image/ikon.jpg')}/>
+                        <Image style={styles.Photo} source={this.props.bezel.image ? {uri: this.props.bezel.image} : require('../static/image/bezel.png')}/>
                     </TouchableHighlight>
                 </View>
             </View>

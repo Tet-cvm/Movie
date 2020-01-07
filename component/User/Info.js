@@ -144,7 +144,7 @@ export default class Info extends Component {
     render() {
         return (
             <View style={styles.Info}>
-                <Back navigation={this.props.navigation} active={true}/>
+                <Back navigation={this.props.navigation} active={true} before={false}/>
                 <View style={styles.Container}>
                     <TouchableHighlight underlayColor='transparent' onPress={()=>this._onImage()}>
                         <View style={styles.Item}>

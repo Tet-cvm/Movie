@@ -12,9 +12,10 @@ export default class About extends Component {
     render() {
         return (
             <View style={styles.About}>
-                <Back navigation={this.props.navigation} active={false}/>
+                <Back navigation={this.props.navigation} active={false} before={false}/>
                 <View style={styles.Panel}>
-                    <Text>About</Text>
+                    <Text>关于我及项目</Text>
+                    <Text></Text>
                 </View>
             </View>
         )
@@ -26,8 +27,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     Panel: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        flex: 1
     }
 })

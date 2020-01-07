@@ -11,6 +11,7 @@ export default class Collect extends Component {
         this.state = {
             record: '',
             scene: -1, // 0有数据 1无数据 2未登录
+            cancelStatus: false
         }
     }
 
@@ -20,6 +21,10 @@ export default class Collect extends Component {
 
     componentDidMount() {
         Public.report('00008', 'show', 1);
+    }
+
+    componentWillUnmount() {
+        this.setState({cancelStatus: false});
     }
 
     // 返回刷新
@@ -45,6 +50,10 @@ export default class Collect extends Component {
                 this.setState({
                     record: res.data,
                     scene: 0
+                }, () => {
+                    setTimeout(() => {
+                        this.setState({cancelStatus: true});
+                    }, 300);
                 });
             } else {
                 if (res.login) {
@@ -105,7 +114,7 @@ export default class Collect extends Component {
         })
     }
 
-    _onLogin = ()=> {
+    _onLogin = () => {
         Public.report('00008', 'click', 2);
         this.props.navigation.navigate('Login', {
             refresh:()=>{
@@ -114,12 +123,68 @@ export default class Collect extends Component {
         })
     }
 
+    _onFusion = () => {
+        this.setState({cancelStatus: false});
+    }
+
     render() {
         return (
             <View style={styles.Collect}>
-                <Back navigation={this.props.navigation} active={true}/>
+                <Back navigation={this.props.navigation} onFusion={this._onFusion} active={true} before={true}/>
                 <View style={styles.Panel}>
                     {
+                        (this.state.scene == 0)
+                        ? <SwipeListView
+                            data={this.state.record}
+                            keyExtractor={(data, index) => data.id.toString()}
+                            renderItem={(data, row) => (
+                                <TouchableHighlight style={styles.Items} underlayColor="#ededed" onPress={() => this._onPlayer(data.item.id)}>
+                                    <View style={styles.List}>
+                                        <Image style={styles.Photo} source={{uri: data.item.poster}}/>
+                                        <View style={styles.Message}>
+                                            <Text style={styles.Caption}>{ this._onFilter(data.item.name) }</Text>
+                                            <Text style={styles.Timer}>{ data.item.time }</Text>
+                                        </View>
+                                    </View>
+                                </TouchableHighlight>
+                            )}
+                            renderHiddenItem={(data, row) => (
+                                <View style={styles.Delete}>
+                                    {
+                                        this.state.cancelStatus
+                                        ? <TouchableHighlight underlayColor="transparent" onPress={()=>{ this._onCancel(row, data.item.id) }}>
+                                                <View style={styles.Cancel}>
+                                                    <Text style={styles.Square}>取消</Text>
+                                                    <Text style={styles.Square}>收藏</Text>
+                                                </View>
+                                            </TouchableHighlight> : null
+                                    }
+                                </View>
+                            )}
+                            rightOpenValue={-75}
+                            disableRightSwipe={true}
+                        /> : null
+                    }
+
+                    {
+                        (this.state.scene == 1)
+                        ? <View style={styles.Login}>
+                                <Image style={styles.Nodata} source={require('../static/image/nodata.png')}/>
+                                <Text style={styles.Goin}>暂无数据~</Text>
+                        </View> : null
+                    }
+
+                    {
+                        (this.state.scene == 2)
+                        ? <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={() => this._onLogin()}>
+                            <View style={styles.Login}>
+                                <Image style={styles.Injustice} source={require('../static/image/injustice.png')}/>
+                                <Text style={styles.Goin}>您还不是会员, 去注册</Text>
+                            </View>
+                        </TouchableHighlight> : null
+                    }
+
+                    {/* {
                         (this.state.scene == 0)
                         ? <SwipeListView
                             data={this.state.record}
@@ -159,7 +224,7 @@ export default class Collect extends Component {
                                 <Text style={styles.Goin}>您还不是会员, 去注册</Text>
                             </View>
                         </TouchableHighlight>
-                    }
+                    } */}
                 </View>
             </View>
         )
@@ -182,6 +247,7 @@ const styles = StyleSheet.create({
     },
     List: {
         flexDirection: 'row',
+        backgroundColor: '#ffffff'
     },
     Photo: {
         marginLeft: 16,
@@ -205,9 +271,11 @@ const styles = StyleSheet.create({
         color: '#666666'
     },
     Delete: {
+        flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#ffffff'
     },
     Cancel: {
         justifyContent: 'center',
