@@ -85,15 +85,8 @@ export default class Player extends Component {
         const data = {
             uniqueid: APP_MOVIE.uniqueid
         };
-        fetch(APP_MOVIE.base_url + '/popup/dialog', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+
+        Axios(APP_MOVIE.base_url + '/popup/dialog', data)
         .then((res) => {
             if (res.status) {
                 this.setState({
@@ -105,9 +98,30 @@ export default class Player extends Component {
                 Public.toast(res.message);
             }
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-        });
+
+        // fetch(APP_MOVIE.base_url + '/popup/dialog', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     if (res.status) {
+        //         this.setState({
+        //             bezel: res.bezel,
+        //             starry: res.starry,
+        //             chasm: res.chasm
+        //         });
+        //     } else {
+        //         Public.toast(res.message);
+        //     }
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+        // });
         
         const {params} = this.props.navigation.state;
         this.setState({id: params.id}, function() {
@@ -131,20 +145,25 @@ export default class Player extends Component {
             id: this.state.id,
             uniqueid: APP_MOVIE.uniqueid
         };
-        fetch(APP_MOVIE.base_url + '/home/history', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+
+        Axios(APP_MOVIE.base_url + '/home/history', data)
         .then((res) => {
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-        });
+
+        // fetch(APP_MOVIE.base_url + '/home/history', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+        // });
     }
 
     _onFetch = ()=> {
@@ -152,15 +171,8 @@ export default class Player extends Component {
             id: this.state.id,
             uniqueid: APP_MOVIE.uniqueid
         };
-        fetch(APP_MOVIE.base_url + '/home/play', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+
+        Axios(APP_MOVIE.base_url + '/home/play', data)
         .then((res) => {
             setTimeout(()=>{
                 this.setState({
@@ -172,9 +184,30 @@ export default class Player extends Component {
                 });
             }, 3000);
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-        });
+
+        // fetch(APP_MOVIE.base_url + '/home/play', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     setTimeout(()=>{
+        //         this.setState({
+        //             login: res.login,
+        //             videoData: res.data,
+        //             playData: this._onLight(res.data.domains, 0),
+        //             videoUrl: res.data.domains[0].uri,
+        //             loadComplete: true,
+        //         });
+        //     }, 3000);
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+        // });
     }
 
     _onLight = (data, index)=> {

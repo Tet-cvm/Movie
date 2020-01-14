@@ -36,15 +36,7 @@ export default class Collect extends Component {
         const data = {
             uniqueid: APP_MOVIE.uniqueid
         };
-        fetch(APP_MOVIE.base_url + '/home/star', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+        Axios(APP_MOVIE.base_url + '/home/star', data)
         .then((res) => {
             if (res.status) {
                 this.setState({
@@ -67,9 +59,41 @@ export default class Collect extends Component {
                 }
             }
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-        });
+
+        // fetch(APP_MOVIE.base_url + '/home/star', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     if (res.status) {
+        //         this.setState({
+        //             record: res.data,
+        //             scene: 0
+        //         }, () => {
+        //             setTimeout(() => {
+        //                 this.setState({cancelStatus: true});
+        //             }, 300);
+        //         });
+        //     } else {
+        //         if (res.login) {
+        //             this.setState({
+        //                 scene: 1
+        //             });
+        //         } else {
+        //             this.setState({
+        //                 scene: 2
+        //             });
+        //         }
+        //     }
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+        // });
     }
 
     _onFilter = (name)=> {
@@ -84,15 +108,8 @@ export default class Collect extends Component {
         const data = {
             id: id
         };
-        fetch(APP_MOVIE.base_url + '/home/cancel', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+
+        Axios(APP_MOVIE.base_url + '/home/cancel', data)
         .then((res) => {
             row[id].closeRow();
             const newData = [...this.state.record];
@@ -102,9 +119,28 @@ export default class Collect extends Component {
             newData.splice(index, 1);
             this.setState({ record: newData });
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-        });
+
+        // fetch(APP_MOVIE.base_url + '/home/cancel', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     row[id].closeRow();
+        //     const newData = [...this.state.record];
+        //     const index = this.state.record.findIndex(
+        //         item => item.id === id
+        //     );
+        //     newData.splice(index, 1);
+        //     this.setState({ record: newData });
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+        // });
     }
 
     _onPlayer = (id) => {

@@ -133,24 +133,31 @@ export default class Public extends Component {
         })
     }
 
-    static axios = (data) => { 
-        fetch(APP_MOVIE.base_url + '/report/report', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+    static axios = (data) => {
+        Axios(APP_MOVIE.base_url + '/report/report', data)
         .then((res) => {
             if (!res.status) {
                 Public.toast(res.message);
             }
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-        });
+
+        // fetch(APP_MOVIE.base_url + '/report/report', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     if (!res.status) {
+        //         Public.toast(res.message);
+        //     }
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+        // });
     }
 
     // 两端通信

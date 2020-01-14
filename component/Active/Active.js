@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, Dimensions, WebView, Text, View, Image, Alert} from 'react-native';
+import Axios from '../Common/Axios';
 import Public from '../Common/Public';
 
 export default class Active extends Component {
@@ -14,23 +15,31 @@ export default class Active extends Component {
     }
 
     componentWillMount() {
-        fetch(APP_MOVIE.base_url + '/active/cloud', {
-            method: 'POST',
-            mode: "cors",
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+        Axios(APP_MOVIE.base_url + '/active/cloud', {})
         .then((res) => {
             this.setState({status: res.status})
             if (res.status) {
                 this.setState({cloud: res.url});
             }
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-        });
+
+        // fetch(APP_MOVIE.base_url + '/active/cloud', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     this.setState({status: res.status})
+        //     if (res.status) {
+        //         this.setState({cloud: res.url});
+        //     }
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+        // });
     }
 
     componentDidMount() {

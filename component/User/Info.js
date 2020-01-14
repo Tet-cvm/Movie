@@ -13,7 +13,7 @@ export default class Info extends Component {
             icon: '',
             has_icon: false,
             sex: Boolean,
-            signature: '',
+            signature: ''
         }
     }
 
@@ -41,19 +41,23 @@ export default class Info extends Component {
             data.append('file', file);
             data.append('uniqueid', APP_MOVIE.uniqueid);
 
-            fetch(APP_MOVIE.base_url + '/signin/upload', {
-                method: 'POST',
-                mode: "cors",
-                body: data,
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            })
+            Axios(APP_MOVIE.base_url + '/signin/upload', data, null, 'multipart/form-data', true)
             .then((res) => {
             })
-            .catch((error) =>{
-                Public.toast('网络错误~');
-            });
+
+            // fetch(APP_MOVIE.base_url + '/signin/upload', {
+            //     method: 'POST',
+            //     mode: "cors",
+            //     body: data,
+            //     headers: {
+            //         'Content-Type': 'multipart/form-data',
+            //     }
+            // })
+            // .then((res) => {
+            // })
+            // .catch((error) =>{
+            //     Public.toast('网络错误~');
+            // });
 
         });
     }
@@ -86,24 +90,30 @@ export default class Info extends Component {
     }
 
     _onChange = (data)=> {
-        fetch(APP_MOVIE.base_url + '/signin/modify', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+        Axios(APP_MOVIE.base_url + '/signin/modify', data)
         .then((res) => {
             if (!res.status) {
                 Public.toast(res.message);
             }
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-		});
 
+        // fetch(APP_MOVIE.base_url + '/signin/modify', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     if (!res.status) {
+        //         Public.toast(res.message);
+        //     }
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+		// });
     }
 
     _onFetch = ()=> {
@@ -112,15 +122,7 @@ export default class Info extends Component {
             uniqueid: APP_MOVIE.uniqueid
         };
 
-        fetch(APP_MOVIE.base_url + '/signin/member', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+        Axios(APP_MOVIE.base_url + '/signin/member', data)
         .then((res) => {
             if (res.status) {
                 this.setState({
@@ -132,9 +134,30 @@ export default class Info extends Component {
                 })
             }
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-		});
+
+        // fetch(APP_MOVIE.base_url + '/signin/member', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     if (res.status) {
+        //         this.setState({
+        //             icon: res.data.icon,
+        //             has_icon: (res.data.icon == '') ? false : true,
+        //             nick: res.data.nick,
+        //             sex: res.data.sex,
+        //             signature: res.data.signature
+        //         })
+        //     }
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+		// });
     }
 
     render() {

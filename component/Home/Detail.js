@@ -31,24 +31,33 @@ export default class Detail extends Component {
                 id: this.props.id,
                 uniqueid: APP_MOVIE.uniqueid
             };
-            fetch(APP_MOVIE.base_url + '/home/collect', {
-                method: 'POST',
-                mode: "cors",
-                body: JSON.stringify(data),
-                headers: new Headers({
-                    'Content-Type': 'application/json',
-                })
-            })
-            .then((response) => response.json())
+
+            Axios(APP_MOVIE.base_url + '/home/collect', data)
             .then((res) => {
                 if (res.status) {
                     this.props.onRefLove(res.collect);
                     Public.toast(res.message);
                 }
             })
-            .catch((error) =>{
-                Public.toast('网络错误~');
-            });
+
+            // fetch(APP_MOVIE.base_url + '/home/collect', {
+            //     method: 'POST',
+            //     mode: "cors",
+            //     body: JSON.stringify(data),
+            //     headers: new Headers({
+            //         'Content-Type': 'application/json',
+            //     })
+            // })
+            // .then((response) => response.json())
+            // .then((res) => {
+            //     if (res.status) {
+            //         this.props.onRefLove(res.collect);
+            //         Public.toast(res.message);
+            //     }
+            // })
+            // .catch((error) =>{
+            //     Public.toast('网络错误~');
+            // });
         } else {
             this.props.navigation.navigate('Login', {
                 refresh:()=>{

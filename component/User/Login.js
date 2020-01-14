@@ -94,15 +94,7 @@ export default class Login extends Component {
             password: this.state.password
         };
 
-        fetch(APP_MOVIE.base_url + '/signin/register', {
-            method: 'POST',
-            mode: "cors",
-            body: JSON.stringify(data),
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            })
-        })
-        .then((response) => response.json())
+        Axios(APP_MOVIE.base_url + '/signin/register', data, true)
         .then((res) => {
             if (res.status) {
                 Public.loadHide();
@@ -115,10 +107,36 @@ export default class Login extends Component {
                 Public.toast(res.message);
             }
         })
-        .catch((error) =>{
+        .catch((err) => {
             Public.loadHide();
             Public.toast('网络错误~');
-		});
+        })
+
+        // fetch(APP_MOVIE.base_url + '/signin/register', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     body: JSON.stringify(data),
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json'
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     if (res.status) {
+        //         Public.loadHide();
+        //         Public.toast(res.message);
+        //         Public.storage.save({key: 'unionid', data: res.key})
+        //         this.props.navigation.goBack();
+        //         this.props.navigation.state.params.refresh();
+        //     } else {
+        //         Public.loadHide();
+        //         Public.toast(res.message);
+        //     }
+        // })
+        // .catch((error) =>{
+        //     Public.loadHide();
+        //     Public.toast('网络错误~');
+		// });
     }
 
     render() {

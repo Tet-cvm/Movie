@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {StatusBar, StyleSheet, Dimensions, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 import '../Config/Config';
+import Axios from '../Common/Axios';
 import Public from '../Common/Public';
 
 export default class Home extends Component {
@@ -25,14 +26,7 @@ export default class Home extends Component {
     }
 
     _onFetch = ()=> {
-        fetch(APP_MOVIE.base_url + '/home/movie', {
-            method: 'POST',
-            mode: "cors",
-            headers: new Headers({
-                'Content-Type': 'application/json',
-            })
-        })
-        .then((response) => response.json())
+        Axios(APP_MOVIE.base_url + '/home/movie', {})
         .then((res) => {
             if (res.status) {
                 this.setState({movie: res.data});
@@ -40,9 +34,25 @@ export default class Home extends Component {
                 Public.toast(res.message);
             }
         })
-        .catch((error) =>{
-            Public.toast('网络错误~');
-        });
+
+        // fetch(APP_MOVIE.base_url + '/home/movie', {
+        //     method: 'POST',
+        //     mode: "cors",
+        //     headers: new Headers({
+        //         'Content-Type': 'application/json',
+        //     })
+        // })
+        // .then((response) => response.json())
+        // .then((res) => {
+        //     if (res.status) {
+        //         this.setState({movie: res.data});
+        //     } else {
+        //         Public.toast(res.message);
+        //     }
+        // })
+        // .catch((error) =>{
+        //     Public.toast('网络错误~');
+        // });
     }
 
     _onFilter = (name)=> {
