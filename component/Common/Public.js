@@ -8,6 +8,8 @@ import Storage from 'react-native-storage';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Alert } from 'react-native';
 
+let toastStatus = true;
+
 export default class Public extends Component {
     constructor(props, context) {
         super(props, context);
@@ -38,14 +40,20 @@ export default class Public extends Component {
 
     // 调用方式: Public.toast('网络错误~');
     static toast = (message)=> {
-        Toast.show(message, {
-            duration: Toast.durations.LONG,
-            position: Toast.positions.CENTER,
-            shadow: true,
-            animation: true,
-            hideOnPress: true,
-            delay: 0
-        });
+        if (toastStatus) {
+            toastStatus = false;
+            Toast.show(message, {
+                duration: Toast.durations.LONG,
+                position: Toast.positions.CENTER,
+                shadow: true,
+                animation: true,
+                hideOnPress: true,
+                delay: 0
+            });
+            setTimeout(() => {
+                toastStatus = true;
+            }, 3500);
+        }
     }
 
     // 调用方式 Public.loadShow('登录中...');
@@ -98,7 +106,7 @@ export default class Public extends Component {
             key: 'unionid'
         })
         .then(res => {
-            let userid = String(res);            
+            let userid = String(res); 
             let data = {
                 sceneid: sceneid,
                 userid: userid,
@@ -125,7 +133,7 @@ export default class Public extends Component {
         })
     }
 
-    static axios = (data) => {
+    static axios = (data) => { 
         fetch(APP_MOVIE.base_url + '/report/report', {
             method: 'POST',
             mode: "cors",
@@ -170,5 +178,4 @@ export default class Public extends Component {
             console.log(e);
         }
     }
-
 }

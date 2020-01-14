@@ -50,10 +50,6 @@ export default class Info extends Component {
                 }
             })
             .then((res) => {
-                // this.setState({
-                //     test: JSON.stringify(res)
-                // })
-                // Alert.alert(JSON.stringify(res.json()));
             })
             .catch((error) =>{
                 Public.toast('网络错误~');
@@ -155,7 +151,7 @@ export default class Info extends Component {
                             {
                                 this.state.has_icon
                                 ? <Image style={styles.Pic} source={{uri: this.state.icon}}/>
-                                : <Image style={styles.Pic} source={require('../static/image/default_member.png')}/>
+                                : <Image style={styles.Pic} source={require('../static/image/member.png')}/>
                             }
                             </View>
                         </View>

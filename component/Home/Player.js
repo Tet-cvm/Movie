@@ -36,11 +36,15 @@ export default class Player extends Component {
         this.state = {
             login: false, // 登录状态
             videoData: { // 视频数据
-                star: null,
-                series: null,
                 collect: false,
-                describe: null
+                name: null,
+                poster: null,
+                series: null,
+                describe: null,
+                star: null,
+                score: null,
             },
+            playData: [],
             bezel: { // 弹窗广告
                 status: false,
                 app: null,
@@ -59,7 +63,8 @@ export default class Player extends Component {
             },
             id: Number,
             loadComplete: false, // 数据接口是否加载完成
-            videoUrl: "#", // 视频地址
+            videoError: true,
+            videoUrl: '',// 视频地址
             videoCover: "https://mdqygl.cn/Movie/videoCover.jpg", // 视频封面
             videoWidth: screenWidth,
             videoHeight: screenWidth * 9/16, // 默认16：9的宽高比
@@ -161,9 +166,8 @@ export default class Player extends Component {
                 this.setState({
                     login: res.login,
                     videoData: res.data,
-                    // data: res.data,
-                    // videoUrl: res.data.domains,
-                    // videoUrl: res.data.domains[0],
+                    playData: this._onLight(res.data.domains, 0),
+                    videoUrl: res.data.domains[0].uri,
                     loadComplete: true,
                 });
             }, 3000);
@@ -171,6 +175,16 @@ export default class Player extends Component {
         .catch((error) =>{
             Public.toast('网络错误~');
         });
+    }
+
+    _onLight = (data, index)=> {
+        let arr = [];
+        for (let i=0; i<data.length; i++){
+            let li = {gather: data[i].gather, uri: data[i].uri, status: false};
+            ( i == index ) ? li.status = true : li.status = false;
+            arr.push(li);
+        }
+        return arr;
     }
 
     // 全屏判断
@@ -210,13 +224,15 @@ export default class Player extends Component {
     // 视频播放进度
     _onProgress = (data) => {
         if (this.state.isPlaying) {
-            this.setState({currentTime: data.currentTime});
+            this.setState({
+                currentTime: data.currentTime,
+            });
         }
     };
 
     // 视频缓冲中...
     _onBuffering = () => {
-        Alert.alert('视频缓冲中');
+        // Alert.alert('视频缓冲中');
     };
 
     // 视频播放完毕
@@ -230,7 +246,9 @@ export default class Player extends Component {
 
     // 视频播放失败
     _onPlayError = () => {
-        console.log('视频播放失败');
+        this.setState({
+            videoError: false,
+        });
     };
 
     // 控制播放器工具栏的显示和隐藏
@@ -293,12 +311,27 @@ export default class Player extends Component {
         }
     }
 
+    onHeavy = ()=> {
+        this.setState({
+            videoError: true
+        });
+    }
+
     onRefFadeIn = (ref) => {
         this.FadeIn = ref;
     }
 
     onRefFadeOut = (ref) => {
         this.FadeOut = ref;
+    }
+
+    _onGather = (index)=> {
+        let uri = this.state.playData[index].uri;
+        let status = this._onLight(this.state.playData, index);
+        this.setState({
+            videoUrl: uri,
+            playData: status
+        })
     }
 
     _onRefLove = (value)=> {
@@ -328,29 +361,43 @@ export default class Player extends Component {
                 <View style={{ width: this.state.videoWidth, height: this.state.videoHeight, backgroundColor:'#000000' }}>
                     {
                         this.state.loadComplete ?
-                        <View>
-                            <Video
-                                ref={(ref) => this.videoPlayer = ref}
-                                source={{uri: this.state.videoUrl}}
-                                rate={1.0}
-                                volume={1.0}
-                                muted={false}
-                                fullscreen={this.state.isFullScreen}
-                                paused={!this.state.isPlaying}
-                                resizeMode={'contain'}
-                                playWhenInactive={false}
-                                playInBackground={false}
-                                ignoreSilentSwitch={'ignore'}
-                                progressUpdateInterval={250.0}
-                                onLoadStart={this._onLoadStart}      // 视频开始加载是回调
-                                onLoad={this._onLoadEnd}             // 视频加载完毕回调
-                                onProgress={this._onProgress}        // 进度控制，每250ms调用一次，以获取视频播放的进度
-                                onEnd={this._onPlayEnd}              // 当视频播放完毕后的回调函数
-                                onError={this._onPlayError}          // Callback when video cannot be loaded
-                                onBuffer={this._onBuffering}         // Callback when remote video is buffering
-                                style={{width: this.state.videoWidth, height: this.state.videoHeight}}
-                                />
-                        </View>
+                            this.state.videoError ?
+                            <View>
+                                <Video
+                                    ref={(ref) => this.videoPlayer = ref}
+                                    source={{uri: this.state.videoUrl}}
+                                    rate={1.0}
+                                    volume={1.0}
+                                    muted={false}
+                                    fullscreen={this.state.isFullScreen}
+                                    paused={!this.state.isPlaying}
+                                    resizeMode={'contain'}
+                                    playWhenInactive={false}
+                                    playInBackground={false}
+                                    ignoreSilentSwitch={'ignore'}
+                                    progressUpdateInterval={250.0}
+                                    onLoadStart={this._onLoadStart}      // 视频开始加载是回调
+                                    onLoad={this._onLoadEnd}             // 视频加载完毕回调
+                                    onProgress={this._onProgress}        // 进度控制，每250ms调用一次，以获取视频播放的进度
+                                    onEnd={this._onPlayEnd}              // 当视频播放完毕后的回调函数
+                                    onError={this._onPlayError}          // Callback when video cannot be loaded
+                                    onBuffer={this._onBuffering}         // Callback when remote video is buffering
+                                    style={{width: this.state.videoWidth, height: this.state.videoHeight}}
+                                    />
+                            </View>
+                            :<View style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginTop: (this.state.videoHeight - 30) / 2,
+                                marginLeft: (this.state.videoWidth - 30) / 2,
+                                width: 48,
+                                height: 48,
+                                zIndex: 999,
+                            }}>
+                                <TouchableHighlight underlayColor="transparent" onPress={()=>this.onHeavy()}>
+                                    <MaterialCommunityIcons name='reload' size={34} color={'#ffffff'}/>
+                                </TouchableHighlight>
+                            </View>
                         :<View style={styles.Preheat}>
                             <Image
                                 style={{
@@ -430,10 +477,12 @@ export default class Player extends Component {
                     : <Detail
                         id={this.state.id}
                         videoData={this.state.videoData}
+                        playData={this.state.playData}
                         starry={this.state.starry}
                         chasm={this.state.chasm}
                         login={this.state.login}
                         navigation={this.props.navigation}
+                        onGather={this._onGather}
                         onRefLove={this._onRefLove}
                         onRefLogin={this._onRefLogin}
                         />

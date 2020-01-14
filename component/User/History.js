@@ -58,8 +58,7 @@ export default class History extends Component {
             }
         })
         .catch((error) =>{
-            Public.toast(JSON.stringify(error));
-            // Public.toast('网络错误~');
+            Public.toast('网络错误~');
         });
     }
 
@@ -114,7 +113,7 @@ export default class History extends Component {
                     {
                         (this.state.scene == 1)
                         ? <View style={styles.Login}>
-                                <Image style={styles.Nodata} source={require('../static/image/nodata.png')}/>
+                                <Image style={styles.Nodata} source={require('../static/image/miss.png')}/>
                                 <Text style={styles.Goin}>暂无数据~</Text>
                         </View> : null
                     }
@@ -123,43 +122,11 @@ export default class History extends Component {
                         (this.state.scene == 2)
                         ? <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={() => this._onLogin()}>
                             <View style={styles.Login}>
-                                <Image style={styles.Injustice} source={require('../static/image/injustice.png')}/>
+                                <Image style={styles.Injustice} source={require('../static/image/signin.png')}/>
                                 <Text style={styles.Goin}>您还不是会员, 去注册</Text>
                             </View>
                         </TouchableHighlight> : null
                     }
-
-
-                    {/* {
-                        (this.state.scene == 0)
-                        ? <FlatList
-                            data={this.state.record}
-                            numColumns={1}
-                            keyExtractor={(item, index) => item.id.toString()}
-                            renderItem={({item}) =>
-                                <TouchableHighlight style={styles.Items} underlayColor="#ededed" onPress={() => this._onPlayer(item.id)}>
-                                    <View style={styles.List}>
-                                        <Image style={styles.Photo} source={{uri: item.poster}}/>
-                                        <View style={styles.Message}>
-                                            <Text style={styles.Caption}>{ this._onFilter(item.name) }</Text>
-                                            <Text style={styles.Timer}>{ item.time }</Text>
-                                        </View>
-                                    </View>
-                                </TouchableHighlight>
-                            }
-                            />
-                        : (this.state.scene == 1)
-                        ? <View style={styles.Login}>
-                                <Image style={styles.Nodata} source={require('../static/image/nodata.png')}/>
-                                <Text style={styles.Goin}>暂无数据~</Text>
-                        </View>
-                        : <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={() => this._onLogin()}>
-                            <View style={styles.Login}>
-                                <Image style={styles.Injustice} source={require('../static/image/injustice.png')}/>
-                                <Text style={styles.Goin}>您还不是会员, 去注册</Text>
-                            </View>
-                        </TouchableHighlight>
-                    } */}
                 </View>
             </View>
         )
@@ -211,7 +178,6 @@ const styles = StyleSheet.create({
     Injustice: {
         width: 120,
         height: 120,
-        backgroundColor: '#10aeff'
     },
     Goin: {
         marginTop: 12,
@@ -221,6 +187,6 @@ const styles = StyleSheet.create({
     },
     Nodata: {
         width: 120,
-        height: 70,
+        height: 120,
     }
 })

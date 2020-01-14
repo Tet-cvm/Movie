@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import {StatusBar, StyleSheet, Dimensions, FlatList, Text, View, Image, TouchableHighlight, Alert, RecyclerViewBackedScrollView} from 'react-native';
+import {StatusBar, StyleSheet, Dimensions, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 import '../Config/Config';
 import Public from '../Common/Public';
 

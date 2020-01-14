@@ -3,7 +3,7 @@ import DeviceInfo from 'react-native-device-info';
 const uniqueid = DeviceInfo.getUniqueId();
 const brand = DeviceInfo.getBrand();
 
-const APP_ENV = 'production'; // development & production
+const APP_ENV = 'development'; // development & production
 
 global.APP_MOVIE = {
     base_url: APP_ENV == 'production' ? 'http://wind.slogger.cn' : 'http://172.18.28.82',

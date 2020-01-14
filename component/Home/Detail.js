@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, Dimensions, Text, View, TouchableHighlight, Alert, Image} from 'react-native';
+import {StyleSheet, Dimensions, Text, View, ScrollView, TouchableHighlight, Alert, Image} from 'react-native';
 import '../Config/Config';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -64,6 +64,7 @@ export default class Detail extends Component {
     }
 
     render() {
+        let playData = this.props.playData;
         return (
             <View style={styles.Detail}>
                 <ScrollableTabView
@@ -95,10 +96,42 @@ export default class Detail extends Component {
                             </TouchableHighlight>
                         </View>
                     </View>
-                    <View tabLabel="详情" style={styles.Matter}>
+                    <ScrollView tabLabel="详情" style={styles.Matter}>
+                        <View style={styles.Gather}>
+                            {
+                                playData && playData.map((item, index)=>(
+                                    <View 
+                                        style={{
+                                            marginTop: 8,
+                                            marginRight: 12,
+                                            paddingLeft: 10,
+                                            paddingRight: 10,
+                                            minWidth: 16,
+                                            height: 30,
+                                            borderColor: item.status ? '#10aeff' : '#d1d1d1',
+                                            borderRadius: 3,
+                                            borderWidth: 0.5
+                                        }}
+                                        key={index}
+                                        >
+                                        <TouchableHighlight underlayColor="transparent" onPress={() => this.props.onGather(index)}>
+                                            <View style={styles.Pitch}>
+                                                <Text style={{
+                                                        fontSize: 15,
+                                                        color: item.status ? '#10aeff' : '#666666'
+                                                    }}>
+                                                {item.gather}</Text>
+                                            </View>
+                                        </TouchableHighlight>
+                                    </View>
+
+                                ))
+                            }
+                        </View>
+                        <View style={styles.Halve}></View>
                         <View style={styles.Collect}>
                             <View>
-                                <Text style={styles.Star}>作者: { this.props.videoData.star }</Text>
+                                <Text style={styles.Star}>主演 : { this.props.videoData.star }</Text>
                                 <Text style={styles.Series}>类型: { this.props.videoData.series }</Text>
                             </View>
                             <TouchableHighlight underlayColor="transparent" style={styles.Love} onPress={()=>{ this._onCollect() }}>
@@ -108,7 +141,7 @@ export default class Detail extends Component {
                         <View>
                             <Text style={styles.Describe}>简介: { this.props.videoData.describe }</Text>
                         </View>
-                    </View>
+                    </ScrollView>
                 </ScrollableTabView>
             </View>
         )
@@ -135,13 +168,28 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width,
         height: 76,
     },
-    Gather: {
-        flex: 1,
-        backgroundColor: '#f5f5f5'
-    },
     Matter: {
         flex: 1,
         backgroundColor: '#f5f5f5'
+    },
+    Gather: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        paddingTop: 12,
+        paddingBottom: 12,
+        marginLeft: 12,
+        width: Dimensions.get('window').width - 12,
+    },
+    Halve: {
+        marginLeft: 12,
+        width: Dimensions.get('window').width - 24,
+        borderBottomColor: '#d1d1d1',
+        borderBottomWidth: 0.5,
+    },
+    Pitch: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 30,
     },
     Collect: {
         flexDirection: 'row',

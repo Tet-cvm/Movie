@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, Alert, View, TouchableHighlight} from 'react-native';
+import {StyleSheet, View, TouchableHighlight, Alert} from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 

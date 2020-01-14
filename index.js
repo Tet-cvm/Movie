@@ -3,7 +3,6 @@ import {AppRegistry} from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 //图标
-import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 // 组件
@@ -82,12 +81,6 @@ const AppNavigator = createStackNavigator({
     Detail: Detail,
     Player: Player,
     Page: Page,
-    // Player: {
-    //     screen: Player,
-    //     navigationOptions: {
-    //         headerTintColor: 'red'
-    //     }
-    // }
 }, {
     headerMode: 'none',
     mode: 'modal'

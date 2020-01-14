@@ -169,7 +169,7 @@ export default class Collect extends Component {
                     {
                         (this.state.scene == 1)
                         ? <View style={styles.Login}>
-                                <Image style={styles.Nodata} source={require('../static/image/nodata.png')}/>
+                                <Image style={styles.Nodata} source={require('../static/image/miss.png')}/>
                                 <Text style={styles.Goin}>暂无数据~</Text>
                         </View> : null
                     }
@@ -178,53 +178,11 @@ export default class Collect extends Component {
                         (this.state.scene == 2)
                         ? <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={() => this._onLogin()}>
                             <View style={styles.Login}>
-                                <Image style={styles.Injustice} source={require('../static/image/injustice.png')}/>
+                                <Image style={styles.Injustice} source={require('../static/image/signin.png')}/>
                                 <Text style={styles.Goin}>您还不是会员, 去注册</Text>
                             </View>
                         </TouchableHighlight> : null
                     }
-
-                    {/* {
-                        (this.state.scene == 0)
-                        ? <SwipeListView
-                            data={this.state.record}
-                            keyExtractor={(data, index) => data.id.toString()}
-                            renderItem={(data, row) => (
-                                <TouchableHighlight style={styles.Items} underlayColor="#ededed" onPress={() => this._onPlayer(data.item.id)}>
-                                    <View style={styles.List}>
-                                        <Image style={styles.Photo} source={{uri: data.item.poster}}/>
-                                        <View style={styles.Message}>
-                                            <Text style={styles.Caption}>{ this._onFilter(data.item.name) }</Text>
-                                            <Text style={styles.Timer}>{ data.item.time }</Text>
-                                        </View>
-                                    </View>
-                                </TouchableHighlight>
-                            )}
-                            renderHiddenItem={(data, row) => (
-                                <View style={styles.Delete}>
-                                    <TouchableHighlight underlayColor="transparent" onPress={()=>{ this._onCancel(row, data.item.id) }}>
-                                        <View style={styles.Cancel}>
-                                            <Text style={styles.Square}>取消</Text>
-                                            <Text style={styles.Square}>收藏</Text>
-                                        </View>
-                                    </TouchableHighlight>
-                                </View>
-                            )}
-                            rightOpenValue={-75}
-                            disableRightSwipe={true}
-                        />
-                        : (this.state.scene == 1)
-                        ? <View style={styles.Login}>
-                                <Image style={styles.Nodata} source={require('../static/image/nodata.png')}/>
-                                <Text style={styles.Goin}>暂无数据~</Text>
-                        </View>
-                        : <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={() => this._onLogin()}>
-                            <View style={styles.Login}>
-                                <Image style={styles.Injustice} source={require('../static/image/injustice.png')}/>
-                                <Text style={styles.Goin}>您还不是会员, 去注册</Text>
-                            </View>
-                        </TouchableHighlight>
-                    } */}
                 </View>
             </View>
         )
@@ -297,7 +255,6 @@ const styles = StyleSheet.create({
     Injustice: {
         width: 120,
         height: 120,
-        backgroundColor: '#10aeff'
     },
     Goin: {
         marginTop: 12,
@@ -307,6 +264,6 @@ const styles = StyleSheet.create({
     },
     Nodata: {
         width: 120,
-        height: 70,
+        height: 120,
     }
 })

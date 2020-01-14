@@ -18,7 +18,9 @@ export default class User extends Component {
 
     // 返回刷新
     _refresh = ()=> {
-        this._onFetch();
+        setTimeout(() => {
+            this._onFetch();
+        }, 800);
     }
 
     componentDidMount() {
@@ -47,6 +49,7 @@ export default class User extends Component {
         .then((response) => response.json())
         .then((res) => {
             if (res.status) {
+                Public.storage.save({key: 'unionid', data: res.key});
                 this.setState({
                     nick: res.data.nick,
                     icon: res.data.icon,
@@ -143,7 +146,7 @@ export default class User extends Component {
                                         {
                                             this.state.has_icon
                                             ? <Image style={styles.Photo} source={{uri: this.state.icon}}/>
-                                            : <Image style={styles.Photo} source={require('../static/image/default_member.png')}/>
+                                            : <Image style={styles.Photo} source={require('../static/image/member.png')}/>
                                         }
                                         <View style={styles.Msg}>
                                             <Text style={styles.Name}>{ this.state.nick }</Text>
