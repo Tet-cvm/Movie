@@ -37,29 +37,9 @@ export default class Detail extends Component {
             .then((res) => {
                 if (res.status) {
                     this.props.onRefLove(res.collect);
-                    // Public.toast(res.message);
                     appToast(res.message);
                 }
             })
-
-            // fetch(APP_MOVIE.base_url + '/home/collect', {
-            //     method: 'POST',
-            //     mode: "cors",
-            //     body: JSON.stringify(data),
-            //     headers: new Headers({
-            //         'Content-Type': 'application/json',
-            //     })
-            // })
-            // .then((response) => response.json())
-            // .then((res) => {
-            //     if (res.status) {
-            //         this.props.onRefLove(res.collect);
-            //         Public.toast(res.message);
-            //     }
-            // })
-            // .catch((error) =>{
-            //     Public.toast('网络错误~');
-            // });
         } else {
             this.props.navigation.navigate('Login', {
                 refresh:()=>{
@@ -135,7 +115,6 @@ export default class Detail extends Component {
                                             </View>
                                         </TouchableHighlight>
                                     </View>
-
                                 ))
                             }
                         </View>

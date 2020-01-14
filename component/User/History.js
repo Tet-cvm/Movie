@@ -46,37 +46,6 @@ export default class History extends Component {
                 }
             }
         })
-
-        // fetch(APP_MOVIE.base_url + '/home/record', {
-        //     method: 'POST',
-        //     mode: "cors",
-        //     body: JSON.stringify(data),
-        //     headers: new Headers({
-        //         'Content-Type': 'application/json',
-        //     })
-        // })
-        // .then((response) => response.json())
-        // .then((res) => {
-        //     if (res.status) {
-        //         this.setState({
-        //             record: res.data,
-        //             scene: 0
-        //         });
-        //     } else {
-        //         if (res.login) {
-        //             this.setState({
-        //                 scene: 1
-        //             });
-        //         } else {
-        //             this.setState({
-        //                 scene: 2
-        //             });
-        //         }
-        //     }
-        // })
-        // .catch((error) =>{
-        //     Public.toast('网络错误~');
-        // });
     }
 
     _onFilter = (name)=> {

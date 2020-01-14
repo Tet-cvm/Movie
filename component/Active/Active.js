@@ -22,24 +22,6 @@ export default class Active extends Component {
                 this.setState({cloud: res.url});
             }
         })
-
-        // fetch(APP_MOVIE.base_url + '/active/cloud', {
-        //     method: 'POST',
-        //     mode: "cors",
-        //     headers: new Headers({
-        //         'Content-Type': 'application/json',
-        //     })
-        // })
-        // .then((response) => response.json())
-        // .then((res) => {
-        //     this.setState({status: res.status})
-        //     if (res.status) {
-        //         this.setState({cloud: res.url});
-        //     }
-        // })
-        // .catch((error) =>{
-        //     Public.toast('网络错误~');
-        // });
     }
 
     componentDidMount() {

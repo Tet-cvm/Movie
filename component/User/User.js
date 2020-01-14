@@ -55,34 +55,6 @@ export default class User extends Component {
                 })
             }
         })
-
-        // fetch(APP_MOVIE.base_url + '/signin/member', {
-        //     method: 'POST',
-        //     mode: "cors",
-        //     body: JSON.stringify(data),
-        //     headers: new Headers({
-        //         'Content-Type': 'application/json'
-        //     })
-        // })
-        // .then((response) => response.json())
-        // .then((res) => {
-        //     if (res.status) {
-        //         Public.storage.save({key: 'unionid', data: res.key});
-        //         this.setState({
-        //             nick: res.data.nick,
-        //             icon: res.data.icon,
-        //             has_icon: (res.data.icon == '') ? false : true,
-        //             level: this._onLevel(res.data.level),
-        //         }, function() {
-        //             this.setState({
-        //                 loginStatus: true
-        //             })
-        //         })
-        //     }
-        // })
-        // .catch((error) =>{
-        //     Public.toast('网络错误~');
-		// });
     }
 
     _onDetail = () => {

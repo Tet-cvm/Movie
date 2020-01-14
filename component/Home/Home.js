@@ -31,29 +31,9 @@ export default class Home extends Component {
             if (res.status) {
                 this.setState({movie: res.data});
             } else {
-                // Public.toast(res.message);
                 appToast(res.message);
             }
         })
-
-        // fetch(APP_MOVIE.base_url + '/home/movie', {
-        //     method: 'POST',
-        //     mode: "cors",
-        //     headers: new Headers({
-        //         'Content-Type': 'application/json',
-        //     })
-        // })
-        // .then((response) => response.json())
-        // .then((res) => {
-        //     if (res.status) {
-        //         this.setState({movie: res.data});
-        //     } else {
-        //         Public.toast(res.message);
-        //     }
-        // })
-        // .catch((error) =>{
-        //     Public.toast('网络错误~');
-        // });
     }
 
     _onFilter = (name)=> {

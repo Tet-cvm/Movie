@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 
-import Toast from 'react-native-root-toast';
-import RootSiblings from 'react-native-root-siblings';
-import Spinner from 'react-native-loading-spinner-overlay';
 import '../Config/Config';
 import Storage from 'react-native-storage';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Alert } from 'react-native';
 import {appAxios, appToast, appLoad} from '../Common/Gather';
-
-// let toastStatus = true;
 
 export default class Public extends Component {
     constructor(props, context) {
@@ -17,8 +12,6 @@ export default class Public extends Component {
         this.state = {
         }
     }
-
-    // static sibling;
 
     // 调用方式
     // @ save Public.storage.save({key: 'key', data: 'data'})
@@ -38,56 +31,6 @@ export default class Public extends Component {
             
         }
     });
-
-    // 调用方式: Public.toast('网络错误~');
-    // static toast = (message)=> {
-    //     if (toastStatus) {
-    //         toastStatus = false;
-    //         Toast.show(message, {
-    //             duration: Toast.durations.LONG,
-    //             position: Toast.positions.CENTER,
-    //             shadow: true,
-    //             animation: true,
-    //             hideOnPress: true,
-    //             delay: 0
-    //         });
-    //         setTimeout(() => {
-    //             toastStatus = true;
-    //         }, 3500);
-    //     }
-    // }
-
-    // 调用方式 Public.loadShow('登录中...');
-    // static loadShow = (message)=> {
-    //     sibling =  new RootSiblings(
-    //         <Spinner
-    //             visible={true}
-    //             textContent={message}
-    //             panelStyle={{
-    //                 width: 82,
-    //                 height: 82,
-    //                 borderRadius: 5,
-    //                 backgroundColor: 'rgba(0, 0, 0, 0.78)'
-    //             }}
-    //             textStyle={{
-    //                 top: 26,
-    //                 fontSize: 13,
-    //                 color: '#ffffff',
-    //                 height: 'auto',
-    //                 fontWeight:'normal'
-    //             }}
-    //             color={'#ffffff'}
-    //             animation={'fade'}
-    //             overlayColor={'rgba(0, 0, 0, 0)'}
-    //             size={'small'}
-    //             />
-    //     )
-    // }
-
-    // 调用方式 Public.loadHide();
-    // static loadHide = ()=> {
-    //     sibling.destroy();
-    // }
 
     // 调用方式 Public.report();
     static unionid = (data) => {
@@ -142,24 +85,6 @@ export default class Public extends Component {
                 appToast(res.message);
             }
         })
-
-        // fetch(APP_MOVIE.base_url + '/report/report', {
-        //     method: 'POST',
-        //     mode: "cors",
-        //     body: JSON.stringify(data),
-        //     headers: new Headers({
-        //         'Content-Type': 'application/json',
-        //     })
-        // })
-        // .then((response) => response.json())
-        // .then((res) => {
-        //     if (!res.status) {
-        //         Public.toast(res.message);
-        //     }
-        // })
-        // .catch((error) =>{
-        //     Public.toast('网络错误~');
-        // });
     }
 
     // 两端通信

@@ -45,21 +45,6 @@ export default class Info extends Component {
             appAxios(APP_MOVIE.base_url + '/signin/upload', data, null, 'multipart/form-data', true)
             .then((res) => {
             })
-
-            // fetch(APP_MOVIE.base_url + '/signin/upload', {
-            //     method: 'POST',
-            //     mode: "cors",
-            //     body: data,
-            //     headers: {
-            //         'Content-Type': 'multipart/form-data',
-            //     }
-            // })
-            // .then((res) => {
-            // })
-            // .catch((error) =>{
-            //     Public.toast('网络错误~');
-            // });
-
         });
     }
 
@@ -94,28 +79,9 @@ export default class Info extends Component {
         appAxios(APP_MOVIE.base_url + '/signin/modify', data)
         .then((res) => {
             if (!res.status) {
-                // Public.toast(res.message);
                 appToast(res.message);
             }
         })
-
-        // fetch(APP_MOVIE.base_url + '/signin/modify', {
-        //     method: 'POST',
-        //     mode: "cors",
-        //     body: JSON.stringify(data),
-        //     headers: new Headers({
-        //         'Content-Type': 'application/json',
-        //     })
-        // })
-        // .then((response) => response.json())
-        // .then((res) => {
-        //     if (!res.status) {
-        //         Public.toast(res.message);
-        //     }
-        // })
-        // .catch((error) =>{
-        //     Public.toast('网络错误~');
-		// });
     }
 
     _onFetch = ()=> {
@@ -136,30 +102,6 @@ export default class Info extends Component {
                 })
             }
         })
-
-        // fetch(APP_MOVIE.base_url + '/signin/member', {
-        //     method: 'POST',
-        //     mode: "cors",
-        //     body: JSON.stringify(data),
-        //     headers: new Headers({
-        //         'Content-Type': 'application/json',
-        //     })
-        // })
-        // .then((response) => response.json())
-        // .then((res) => {
-        //     if (res.status) {
-        //         this.setState({
-        //             icon: res.data.icon,
-        //             has_icon: (res.data.icon == '') ? false : true,
-        //             nick: res.data.nick,
-        //             sex: res.data.sex,
-        //             signature: res.data.signature
-        //         })
-        //     }
-        // })
-        // .catch((error) =>{
-        //     Public.toast('网络错误~');
-		// });
     }
 
     render() {
