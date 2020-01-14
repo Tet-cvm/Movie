@@ -11,19 +11,26 @@ export default class Popup extends Component {
             watch: 3,
             close: false,
         }
+        this.timer;
     }
 
     componentDidMount() {
         appReport('00002', 'show', 2);
-        let timer = setInterval(() => {
+        this.timer = setInterval(() => {
             let time = this.state.watch - 1;
             if (time >= 0) {
                 this.setState({watch: time});
             } else {
-                clearInterval(timer);
+                clearInterval(this.timer);
                 this.setState({close: true});
             }
         }, 1000);
+    }
+
+    componentWillUnmount() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
     }
 
     _onWake = ()=> {
