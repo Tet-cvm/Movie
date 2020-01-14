@@ -3,6 +3,7 @@ import '../Config/Config';
 import {StyleSheet, Text, View, Image, Alert, Linking, TouchableHighlight} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
 export default class Popup extends Component {
     constructor(props) {

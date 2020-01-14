@@ -3,6 +3,7 @@ import '../Config/Config';
 import {StatusBar, StyleSheet, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
 export default class User extends Component {
     constructor(props) {
@@ -38,7 +39,7 @@ export default class User extends Component {
             uniqueid: APP_MOVIE.uniqueid,
         };
 
-        Axios(APP_MOVIE.base_url + '/signin/member', data)
+        appAxios(APP_MOVIE.base_url + '/signin/member', data)
         .then((res) => {
             if (res.status) {
                 Public.storage.save({key: 'unionid', data: res.key});

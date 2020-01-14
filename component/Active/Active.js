@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {StyleSheet, Dimensions, WebView, Text, View, Image, Alert} from 'react-native';
-import Axios from '../Common/Axios';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
 export default class Active extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export default class Active extends Component {
     }
 
     componentWillMount() {
-        Axios(APP_MOVIE.base_url + '/active/cloud', {})
+        appAxios(APP_MOVIE.base_url + '/active/cloud', {})
         .then((res) => {
             this.setState({status: res.status})
             if (res.status) {

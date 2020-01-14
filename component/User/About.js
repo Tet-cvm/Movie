@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import Back from '../Common/Back';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
 export default class About extends Component {
 

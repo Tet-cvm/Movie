@@ -3,6 +3,7 @@ import '../Config/Config';
 import {StyleSheet, Text, View, Image, Switch, TextInput, TouchableHighlight, Alert} from 'react-native';
 import Back from '../Common/Back';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 import ImagePicker from 'react-native-image-crop-picker';
 
 export default class Info extends Component {
@@ -41,7 +42,7 @@ export default class Info extends Component {
             data.append('file', file);
             data.append('uniqueid', APP_MOVIE.uniqueid);
 
-            Axios(APP_MOVIE.base_url + '/signin/upload', data, null, 'multipart/form-data', true)
+            appAxios(APP_MOVIE.base_url + '/signin/upload', data, null, 'multipart/form-data', true)
             .then((res) => {
             })
 
@@ -90,10 +91,11 @@ export default class Info extends Component {
     }
 
     _onChange = (data)=> {
-        Axios(APP_MOVIE.base_url + '/signin/modify', data)
+        appAxios(APP_MOVIE.base_url + '/signin/modify', data)
         .then((res) => {
             if (!res.status) {
-                Public.toast(res.message);
+                // Public.toast(res.message);
+                appToast(res.message);
             }
         })
 
@@ -122,7 +124,7 @@ export default class Info extends Component {
             uniqueid: APP_MOVIE.uniqueid
         };
 
-        Axios(APP_MOVIE.base_url + '/signin/member', data)
+        appAxios(APP_MOVIE.base_url + '/signin/member', data)
         .then((res) => {
             if (res.status) {
                 this.setState({

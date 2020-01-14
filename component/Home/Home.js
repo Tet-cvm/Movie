@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {StatusBar, StyleSheet, Dimensions, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 import '../Config/Config';
-import Axios from '../Common/Axios';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
 export default class Home extends Component {
     constructor(props) {
@@ -26,12 +26,13 @@ export default class Home extends Component {
     }
 
     _onFetch = ()=> {
-        Axios(APP_MOVIE.base_url + '/home/movie', {})
+        appAxios(APP_MOVIE.base_url + '/home/movie', {})
         .then((res) => {
             if (res.status) {
                 this.setState({movie: res.data});
             } else {
-                Public.toast(res.message);
+                // Public.toast(res.message);
+                appToast(res.message);
             }
         })
 

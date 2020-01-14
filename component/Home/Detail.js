@@ -4,6 +4,7 @@ import '../Config/Config';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
 export default class Detail extends Component {
     constructor(props) {
@@ -32,11 +33,12 @@ export default class Detail extends Component {
                 uniqueid: APP_MOVIE.uniqueid
             };
 
-            Axios(APP_MOVIE.base_url + '/home/collect', data)
+            appAxios(APP_MOVIE.base_url + '/home/collect', data)
             .then((res) => {
                 if (res.status) {
                     this.props.onRefLove(res.collect);
-                    Public.toast(res.message);
+                    // Public.toast(res.message);
+                    appToast(res.message);
                 }
             })
 

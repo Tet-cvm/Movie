@@ -4,6 +4,7 @@ import '../Config/Config';
 import Back from '../Common/Back';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
 export default class Collect extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ export default class Collect extends Component {
         const data = {
             uniqueid: APP_MOVIE.uniqueid
         };
-        Axios(APP_MOVIE.base_url + '/home/star', data)
+        appAxios(APP_MOVIE.base_url + '/home/star', data)
         .then((res) => {
             if (res.status) {
                 this.setState({
@@ -109,7 +110,7 @@ export default class Collect extends Component {
             id: id
         };
 
-        Axios(APP_MOVIE.base_url + '/home/cancel', data)
+        appAxios(APP_MOVIE.base_url + '/home/cancel', data)
         .then((res) => {
             row[id].closeRow();
             const newData = [...this.state.record];

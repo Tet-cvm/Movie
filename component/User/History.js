@@ -3,6 +3,7 @@ import {FlatList, TouchableHighlight, StyleSheet, Text, View, Image, Alert} from
 import '../Config/Config';
 import Back from '../Common/Back';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
 export default class History extends Component {
     constructor(props) {
@@ -30,7 +31,7 @@ export default class History extends Component {
         const data = {
             uniqueid: APP_MOVIE.uniqueid
         };
-        Axios(APP_MOVIE.base_url + '/home/record', data)
+        appAxios(APP_MOVIE.base_url + '/home/record', data)
         .then((res) => {
             if (res.status) {
                 this.setState({

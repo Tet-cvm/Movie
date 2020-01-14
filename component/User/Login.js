@@ -4,6 +4,7 @@ import {StatusBar, StyleSheet, Text, View, Dimensions, KeyboardAvoidingView, Tou
 import Round from '../Common/Round';
 import Button from '../Common/Button';
 import Public from '../Common/Public';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 import { Hoshi } from 'react-native-textinput-effects';
 import DeviceInfo from 'react-native-device-info';
 
@@ -78,10 +79,12 @@ export default class Login extends Component {
     _onSubmit = ()=> {
         Public.report('00005', 'click', 1);
         if (this.state.verifyAccount && this.state.verifyPassword) {
-            Public.loadShow('登录中...');
+            // Public.loadShow('登录中...');
+            appLoad('登录中...', true);
             this._onFetch();
         } else {
-            Public.toast('账户密码输入有误');
+            // Public.toast('账户密码输入有误');
+            appToast('账户密码输入有误');
         }
     }
 
@@ -94,22 +97,28 @@ export default class Login extends Component {
             password: this.state.password
         };
 
-        Axios(APP_MOVIE.base_url + '/signin/register', data, true)
+        appAxios(APP_MOVIE.base_url + '/signin/register', data, true)
         .then((res) => {
             if (res.status) {
-                Public.loadHide();
-                Public.toast(res.message);
+                // Public.loadHide();
+                appLoad();
+                // Public.toast(res.message);
+                appToast(res.message);
                 Public.storage.save({key: 'unionid', data: res.key})
                 this.props.navigation.goBack();
                 this.props.navigation.state.params.refresh();
             } else {
-                Public.loadHide();
-                Public.toast(res.message);
+                // Public.loadHide();
+                appLoad();
+                // Public.toast(res.message);
+                appToast(res.message);
             }
         })
         .catch((err) => {
-            Public.loadHide();
-            Public.toast('网络错误~');
+            // Public.loadHide();
+            appLoad();
+            // Public.toast('网络错误~');
+            appToast('网络错误~');
         })
 
         // fetch(APP_MOVIE.base_url + '/signin/register', {

@@ -7,8 +7,9 @@ import '../Config/Config';
 import Storage from 'react-native-storage';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Alert } from 'react-native';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
-let toastStatus = true;
+// let toastStatus = true;
 
 export default class Public extends Component {
     constructor(props, context) {
@@ -17,7 +18,7 @@ export default class Public extends Component {
         }
     }
 
-    static sibling;
+    // static sibling;
 
     // 调用方式
     // @ save Public.storage.save({key: 'key', data: 'data'})
@@ -39,54 +40,54 @@ export default class Public extends Component {
     });
 
     // 调用方式: Public.toast('网络错误~');
-    static toast = (message)=> {
-        if (toastStatus) {
-            toastStatus = false;
-            Toast.show(message, {
-                duration: Toast.durations.LONG,
-                position: Toast.positions.CENTER,
-                shadow: true,
-                animation: true,
-                hideOnPress: true,
-                delay: 0
-            });
-            setTimeout(() => {
-                toastStatus = true;
-            }, 3500);
-        }
-    }
+    // static toast = (message)=> {
+    //     if (toastStatus) {
+    //         toastStatus = false;
+    //         Toast.show(message, {
+    //             duration: Toast.durations.LONG,
+    //             position: Toast.positions.CENTER,
+    //             shadow: true,
+    //             animation: true,
+    //             hideOnPress: true,
+    //             delay: 0
+    //         });
+    //         setTimeout(() => {
+    //             toastStatus = true;
+    //         }, 3500);
+    //     }
+    // }
 
     // 调用方式 Public.loadShow('登录中...');
-    static loadShow = (message)=> {
-        sibling =  new RootSiblings(
-            <Spinner
-                visible={true}
-                textContent={message}
-                panelStyle={{
-                    width: 82,
-                    height: 82,
-                    borderRadius: 5,
-                    backgroundColor: 'rgba(0, 0, 0, 0.78)'
-                }}
-                textStyle={{
-                    top: 26,
-                    fontSize: 13,
-                    color: '#ffffff',
-                    height: 'auto',
-                    fontWeight:'normal'
-                }}
-                color={'#ffffff'}
-                animation={'fade'}
-                overlayColor={'rgba(0, 0, 0, 0)'}
-                size={'small'}
-                />
-        )
-    }
+    // static loadShow = (message)=> {
+    //     sibling =  new RootSiblings(
+    //         <Spinner
+    //             visible={true}
+    //             textContent={message}
+    //             panelStyle={{
+    //                 width: 82,
+    //                 height: 82,
+    //                 borderRadius: 5,
+    //                 backgroundColor: 'rgba(0, 0, 0, 0.78)'
+    //             }}
+    //             textStyle={{
+    //                 top: 26,
+    //                 fontSize: 13,
+    //                 color: '#ffffff',
+    //                 height: 'auto',
+    //                 fontWeight:'normal'
+    //             }}
+    //             color={'#ffffff'}
+    //             animation={'fade'}
+    //             overlayColor={'rgba(0, 0, 0, 0)'}
+    //             size={'small'}
+    //             />
+    //     )
+    // }
 
     // 调用方式 Public.loadHide();
-    static loadHide = ()=> {
-        sibling.destroy();
-    }
+    // static loadHide = ()=> {
+    //     sibling.destroy();
+    // }
 
     // 调用方式 Public.report();
     static unionid = (data) => {
@@ -134,10 +135,11 @@ export default class Public extends Component {
     }
 
     static axios = (data) => {
-        Axios(APP_MOVIE.base_url + '/report/report', data)
+        appAxios(APP_MOVIE.base_url + '/report/report', data)
         .then((res) => {
             if (!res.status) {
-                Public.toast(res.message);
+                // Public.toast(res.message);
+                appToast(res.message);
             }
         })
 

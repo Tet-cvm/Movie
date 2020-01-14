@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {StyleSheet, StatusBar, Dimensions, ActivityIndicator, TouchableHighlight, View, Image, Text, Alert} from 'react-native';
 import '../Config/Config';
+import {appAxios, appToast, appLoad} from '../Common/Gather';
 
 import Detail from '../Home/Detail'
 import Popup from '../Home/Popup'
@@ -86,7 +87,7 @@ export default class Player extends Component {
             uniqueid: APP_MOVIE.uniqueid
         };
 
-        Axios(APP_MOVIE.base_url + '/popup/dialog', data)
+        appAxios(APP_MOVIE.base_url + '/popup/dialog', data)
         .then((res) => {
             if (res.status) {
                 this.setState({
@@ -95,7 +96,8 @@ export default class Player extends Component {
                     chasm: res.chasm
                 });
             } else {
-                Public.toast(res.message);
+                // Public.toast(res.message);
+                appToast(res.message);
             }
         })
 
@@ -146,7 +148,7 @@ export default class Player extends Component {
             uniqueid: APP_MOVIE.uniqueid
         };
 
-        Axios(APP_MOVIE.base_url + '/home/history', data)
+        appAxios(APP_MOVIE.base_url + '/home/history', data)
         .then((res) => {
         })
 
@@ -172,7 +174,7 @@ export default class Player extends Component {
             uniqueid: APP_MOVIE.uniqueid
         };
 
-        Axios(APP_MOVIE.base_url + '/home/play', data)
+        appAxios(APP_MOVIE.base_url + '/home/play', data)
         .then((res) => {
             setTimeout(()=>{
                 this.setState({
