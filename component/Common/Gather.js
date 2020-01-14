@@ -143,7 +143,7 @@ function axios(data) {
     })
 }
 
-// 两端通信
+// 两端通信 - web端返回-新开
 export function appMachine(event, navigate, navigation) {
     try {
         const data = JSON.parse(event.nativeEvent.data);
@@ -161,10 +161,18 @@ export function appMachine(event, navigate, navigation) {
     }
 }
 
+// 两端通信 - app端新开页
 export function appPrimal(navigate, uri) {
     try {
         navigate('Page', {uri: uri})
     } catch(e) {
         console.log(e);
     }
+}
+
+// 取url参数
+export function appArgument(url, name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    var r = url.match(reg);
+    if (r != null) return unescape(r[2]); return null;
 }
