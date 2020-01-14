@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, Dimensions, WebView, Text, Alert, View, TouchableHighlight} from 'react-native';
-import Public from '../Common/Public';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 export default class Page extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ export default class Page extends Component {
     }
 
     _onMessage = (event)=> {
-        Public.machine(event, this.props.navigation.push, this.props.navigation);
+        appMachine(event, this.props.navigation.push, this.props.navigation);
     }
 
     render() {

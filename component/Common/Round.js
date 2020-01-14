@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
-
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default class Round extends Component {

@@ -3,8 +3,7 @@ import {StyleSheet, Dimensions, Text, View, ScrollView, TouchableHighlight, Aler
 import '../Config/Config';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 export default class Detail extends Component {
     constructor(props) {
@@ -16,13 +15,13 @@ export default class Detail extends Component {
 
     _onStarry = () => {
         if (this.props.starry.url) {
-            Public.primal(this.props.navigation.navigate, this.props.starry.url);
+            appPrimal(this.props.navigation.navigate, this.props.starry.url);
         }
     }
 
     _onChasm = () => {
         if (this.props.chasm.url) {
-            Public.primal(this.props.navigation.navigate, this.props.chasm.url);
+            appPrimal(this.props.navigation.navigate, this.props.chasm.url);
         }
     }
 

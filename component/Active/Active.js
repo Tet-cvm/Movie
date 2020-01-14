@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {StyleSheet, Dimensions, WebView, Text, View, Image, Alert} from 'react-native';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 export default class Active extends Component {
     constructor(props) {
@@ -25,11 +24,11 @@ export default class Active extends Component {
     }
 
     componentDidMount() {
-        Public.report('00003', 'show', 1);
+        appReport('00003', 'show', 1);
     }
     
     _onMessage = (event)=> {
-        Public.machine(event, this.props.navigation.navigate, this.props.navigation);
+        appMachine(event, this.props.navigation.navigate, this.props.navigation);
     }
 
     render() {

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
 import Back from '../Common/Back';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 export default class About extends Component {
 
     componentDidMount() {
-        Public.report('00009', 'show', 1);
+        appReport('00009', 'show', 1);
     }
 
     render() {

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {FlatList, TouchableHighlight, StyleSheet, Text, View, Image, Alert} from 'react-native';
 import '../Config/Config';
 import Back from '../Common/Back';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 export default class History extends Component {
     constructor(props) {
@@ -19,7 +18,7 @@ export default class History extends Component {
     }
 
     componentDidMount() {
-        Public.report('00007', 'show', 1);
+        appReport('00007', 'show', 1);
     }
 
     // 返回刷新
@@ -56,14 +55,14 @@ export default class History extends Component {
     }
 
     _onPlayer = (id) => {
-        Public.report('00007', 'click', 1);
+        appReport('00007', 'click', 1);
         this.props.navigation.navigate('Player', {
             id: id
         });
     }
 
     _onLogin = () => {
-        Public.report('00007', 'click', 2);
+        appReport('00007', 'click', 2);
         this.props.navigation.navigate('Login', {
             refresh:()=>{
                 this._refresh();
@@ -92,10 +91,8 @@ export default class History extends Component {
                                         </View>
                                     </View>
                                 </TouchableHighlight>
-                            }
-                            /> : null
+                            }/> : null
                     }
-
                     {
                         (this.state.scene == 1)
                         ? <View style={styles.Login}>
@@ -103,7 +100,6 @@ export default class History extends Component {
                                 <Text style={styles.Goin}>暂无数据~</Text>
                         </View> : null
                     }
-
                     {
                         (this.state.scene == 2)
                         ? <TouchableHighlight style={styles.Login} underlayColor="transparent" onPress={() => this._onLogin()}>

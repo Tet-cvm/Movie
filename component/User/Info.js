@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import '../Config/Config';
 import {StyleSheet, Text, View, Image, Switch, TextInput, TouchableHighlight, Alert} from 'react-native';
 import Back from '../Common/Back';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 import ImagePicker from 'react-native-image-crop-picker';
 
 export default class Info extends Component {
@@ -23,7 +22,7 @@ export default class Info extends Component {
     }
 
     componentDidMount() {
-        Public.report('00006', 'show', 1);
+        appReport('00006', 'show', 1);
     }
 
     _onImage = ()=> {

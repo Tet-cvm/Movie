@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import '../Config/Config';
 import {StatusBar, StyleSheet, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 export default class User extends Component {
     constructor(props) {
@@ -25,7 +24,7 @@ export default class User extends Component {
     }
 
     componentDidMount() {
-        Public.report('00004', 'show', 1);
+        appReport('00004', 'show', 1);
     }
 
     componentWillMount() {
@@ -42,7 +41,7 @@ export default class User extends Component {
         appAxios(APP_MOVIE.base_url + '/signin/member', data)
         .then((res) => {
             if (res.status) {
-                Public.storage.save({key: 'unionid', data: res.key});
+                appStorage.save({key: 'unionid', data: res.key});
                 this.setState({
                     nick: res.data.nick,
                     icon: res.data.icon,
@@ -58,7 +57,7 @@ export default class User extends Component {
     }
 
     _onDetail = () => {
-        Public.report('00004', 'click', 2);
+        appReport('00004', 'click', 2);
         this.props.navigation.navigate('Info', {
             refresh:()=>{
                 this._refresh();
@@ -67,7 +66,7 @@ export default class User extends Component {
     }
 
     _onLogin = () => {
-        Public.report('00004', 'click', 1);
+        appReport('00004', 'click', 1);
         this.props.navigation.navigate('Login',{
             refresh:()=>{
                 this._refresh();
@@ -76,7 +75,7 @@ export default class User extends Component {
     }
 
     _onHistory = () => {
-        Public.report('00004', 'click', 3);
+        appReport('00004', 'click', 3);
         this.props.navigation.navigate('History', {
             refresh:()=>{
                 this._refresh();
@@ -85,7 +84,7 @@ export default class User extends Component {
     }
 
     _onCollect = () => {
-        Public.report('00004', 'click', 4);
+        appReport('00004', 'click', 4);
         this.props.navigation.navigate('Collect', {
             refresh:()=>{
                 this._refresh();
@@ -94,7 +93,7 @@ export default class User extends Component {
     }
 
     _onAbout = () => {
-        Public.report('00004', 'click', 5);
+        appReport('00004', 'click', 5);
         return;
         this.props.navigation.navigate('About');
     }

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import '../Config/Config';
 import {StyleSheet, Text, View, Image, Alert, Linking, TouchableHighlight} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 export default class Popup extends Component {
     constructor(props) {
@@ -15,7 +14,7 @@ export default class Popup extends Component {
     }
 
     componentDidMount() {
-        Public.report('00002', 'show', 2);
+        appReport('00002', 'show', 2);
         let timer = setInterval(() => {
             let time = this.state.watch - 1;
             if (time >= 0) {

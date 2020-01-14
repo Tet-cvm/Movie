@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import {StyleSheet, StatusBar, Dimensions, ActivityIndicator, TouchableHighlight, View, Image, Text, Alert} from 'react-native';
 import '../Config/Config';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 import Detail from '../Home/Detail'
 import Popup from '../Home/Popup'
-import Public from '../Common/Public'
 import {FadeIn, FadeOut} from '../Common/Fade'
 import Video from 'react-native-video';
 import Orientation from 'react-native-orientation';
@@ -107,7 +106,7 @@ export default class Player extends Component {
     }
 
     componentDidMount() {
-        Public.report('00002', 'show', 1);
+        appReport('00002', 'show', 1);
     }
 
     componentWillUnmount() {

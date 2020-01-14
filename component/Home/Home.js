@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import SplashScreen from 'react-native-splash-screen';
 import {StatusBar, StyleSheet, Dimensions, FlatList, Text, View, Image, TouchableHighlight, Alert} from 'react-native';
 import '../Config/Config';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 export default class Home extends Component {
     constructor(props) {
@@ -17,7 +16,7 @@ export default class Home extends Component {
     componentDidMount() {
         SplashScreen.hide();
         this._onFetch();
-        Public.report('00001', 'show', 1);
+        appReport('00001', 'show', 1);
     }
 
     _onLayout = (event)=> {
@@ -44,7 +43,7 @@ export default class Home extends Component {
     }
 
     _onNavigation = (id) => {
-        Public.report('00001', 'click', id);
+        appReport('00001', 'click', id);
         this.props.navigation.navigate('Player', {id: id})
     }
 
@@ -67,8 +66,7 @@ export default class Home extends Component {
                                     <Text style={styles.Caption}>{ this._onFilter(item.name) }</Text>
                                 </View>
                             </TouchableHighlight>
-                        }
-                        />
+                        }/>
                 </View>
             </View>
         )

@@ -3,8 +3,7 @@ import '../Config/Config';
 import {StatusBar, StyleSheet, Text, View, Dimensions, KeyboardAvoidingView, TouchableHighlight, Alert} from 'react-native';
 import Round from '../Common/Round';
 import Button from '../Common/Button';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 import { Hoshi } from 'react-native-textinput-effects';
 import DeviceInfo from 'react-native-device-info';
 
@@ -37,7 +36,7 @@ export default class Login extends Component {
             uniqueid: uniqueid
         });
 
-        Public.report('00005', 'show', 1);
+        appReport('00005', 'show', 1);
     }
 
     _onAccount = (account)=> {
@@ -77,7 +76,7 @@ export default class Login extends Component {
     }
 
     _onSubmit = ()=> {
-        Public.report('00005', 'click', 1);
+        appReport('00005', 'click', 1);
         if (this.state.verifyAccount && this.state.verifyPassword) {
             appLoad('登录中...', true);
             this._onFetch();
@@ -100,7 +99,7 @@ export default class Login extends Component {
             if (res.status) {
                 appLoad();
                 appToast(res.message);
-                Public.storage.save({key: 'unionid', data: res.key})
+                appStorage.save({key: 'unionid', data: res.key})
                 this.props.navigation.goBack();
                 this.props.navigation.state.params.refresh();
             } else {

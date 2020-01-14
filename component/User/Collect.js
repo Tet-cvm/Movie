@@ -3,8 +3,7 @@ import {FlatList, TouchableHighlight, StyleSheet, Text, View, Image, Alert} from
 import '../Config/Config';
 import Back from '../Common/Back';
 import { SwipeListView } from 'react-native-swipe-list-view';
-import Public from '../Common/Public';
-import {appAxios, appToast, appLoad} from '../Common/Gather';
+import {appAxios, appToast, appLoad, appReport, appStorage, appMachine, appPrimal} from '../Common/Gather';
 
 export default class Collect extends Component {
     constructor(props) {
@@ -21,7 +20,7 @@ export default class Collect extends Component {
     }
 
     componentDidMount() {
-        Public.report('00008', 'show', 1);
+        appReport('00008', 'show', 1);
     }
 
     componentWillUnmount() {
@@ -70,7 +69,7 @@ export default class Collect extends Component {
     }
 
     _onCancel = (row, id)=> {
-        Public.report('00008', 'click', 3);
+        appReport('00008', 'click', 3);
         const data = {
             id: id
         };
@@ -88,14 +87,14 @@ export default class Collect extends Component {
     }
 
     _onPlayer = (id) => {
-        Public.report('00008', 'click', 1);
+        appReport('00008', 'click', 1);
         this.props.navigation.navigate('Player', {
             id: id
         })
     }
 
     _onLogin = () => {
-        Public.report('00008', 'click', 2);
+        appReport('00008', 'click', 2);
         this.props.navigation.navigate('Login', {
             refresh:()=>{
                 this._refresh();
