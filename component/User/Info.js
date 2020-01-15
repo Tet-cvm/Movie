@@ -44,7 +44,10 @@ export default class Info extends Component {
             appAxios(APP_MOVIE.base_url + '/signin/upload', data, null, 'multipart/form-data', true)
             .then((res) => {
             })
-        });
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
     _onNick = ()=> {
