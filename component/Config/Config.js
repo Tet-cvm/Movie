@@ -6,7 +6,7 @@ const brand = DeviceInfo.getBrand();
 const APP_ENV = 'development'; // development & production
 
 global.APP_MOVIE = {
-    base_url: APP_ENV == 'production' ? 'http://wind.slogger.cn' : 'http://172.18.28.82',
+    base_url: APP_ENV == 'production' ? 'http://wind.slogger.cn' : 'http://172.21.3.29',
     uniqueid: uniqueid,
     brand: brand,
     market: {

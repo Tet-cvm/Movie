@@ -8,8 +8,7 @@ export default class Active extends Component {
         this.webView = null;
         this.state = {
             cloud: '',
-            status: Boolean,
-            respond: null,
+            status: Boolean
         }
     }
 
